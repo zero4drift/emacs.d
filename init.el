@@ -5,6 +5,12 @@
 (add-to-list
     'load-path 
     (expand-file-name "lisp" user-emacs-directory))
+
+(add-to-list
+	'custom-theme-load-path
+	(expand-file-name
+		"lisp/custom-themes/solarized"
+		user-emacs-directory))
 	
 (require 'init-elpa)
 (require 'init-company)
