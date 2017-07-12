@@ -2,3 +2,5 @@
 *.el~
 auto-save-list/
 server/
+eshell/
+recentf
