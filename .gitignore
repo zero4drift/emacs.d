@@ -1,3 +1,4 @@
 ### EMACS ###
 *.el~
 auto-save-list/
+server/
