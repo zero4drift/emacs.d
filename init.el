@@ -19,8 +19,6 @@
 (require 'init-ui)
 (require 'init-defaults)
 
-(add-hook 'after-init-hook 'global-company-mode)
-
 (when (file-exists-p custom-file)
   (load custom-file))
 
