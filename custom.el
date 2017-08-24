@@ -10,7 +10,7 @@
  '(custom-safe-themes
    (quote
     ("23cf1bbd82721df1785aa1a10f742e555d6ea41921b65fab0345947bdd56c3f8" default)))
- '(package-selected-packages (quote (magit company))))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
