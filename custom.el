@@ -10,11 +10,12 @@
  '(custom-safe-themes
    (quote
     ("23cf1bbd82721df1785aa1a10f742e555d6ea41921b65fab0345947bdd56c3f8" default)))
- )
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "文泉驿微米黑" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
+ '(default ((t (:family "文泉驿等宽微米黑" :foundry "outline" :slant normal :weight normal :height 105 :width normal)))))
  
