@@ -15,7 +15,6 @@
 (require 'init-elpa)
 (require 'init-company)
 (require 'init-magit)
-(require 'init-intero)
 (require 'init-keybindings)
 (require 'init-ui)
 (require 'init-defaults)
