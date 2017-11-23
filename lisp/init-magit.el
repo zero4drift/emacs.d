@@ -1,4 +1,4 @@
 ;; init-magit.el
 
-(require-package 'magit)
+(require 'magit)
 (provide 'init-magit)

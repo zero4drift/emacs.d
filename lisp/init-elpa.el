@@ -1,20 +1,31 @@
 ;; init-elpa.el
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/") t)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives
+	       '("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/") t)
+  )
 
-(defun require-package (package &optional min-version no-refresh)
-  "Install given PACKAGE, optionally requiring MIN-VERSION.
-If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
-  (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (package-install package)
-      (progn
-        (package-refresh-contents)
-        (require-package package min-version t)))))
-			 
-(package-initialize)
+(require 'cl)
+
+;; add what ever packages you want here
+(defvar zero4drift-packages '(
+			       company
+			       magit
+			       solarized-theme
+			       ) "Default packages")
+
+(defun zero4drift-packages-installed-p ()
+  (loop for pkg in zero4drift-packages
+	when (not (package-installed-p pkg)) do (return nil)
+	finally (return t)))
+
+(unless (zero4drift-packages-installed-p)
+  (message "%s" "Refreshing package database...")
+  (package-refresh-contents)
+  (dolist (pkg zero4drift-packages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg))))
+
 (provide 'init-elpa)

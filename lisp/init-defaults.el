@@ -14,6 +14,8 @@
 
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
 
+(global-hl-line-mode t)
+
 (electric-indent-mode t)
 
 (delete-selection-mode t)
