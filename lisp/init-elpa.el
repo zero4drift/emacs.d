@@ -17,6 +17,8 @@
 			       solarized-theme
 			       ) "Default packages")
 
+(setq package-selected-packages zero4drift-packages)
+
 (defun zero4drift-packages-installed-p ()
   (loop for pkg in zero4drift-packages
 	when (not (package-installed-p pkg)) do (return nil)
