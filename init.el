@@ -22,6 +22,7 @@
 (require 'init-company)
 (require 'init-magit)
 (require 'init-keybindings)
+(require 'init-org)
 (require 'init-ui)
 (require 'init-defaults)
 
