@@ -13,6 +13,7 @@
 (defvar zero4drift-packages '(
 			       company
 			       magit
+				   hungry-delete
 			       solarized-theme
 			       ) "Default packages")
 

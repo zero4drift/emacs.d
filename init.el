@@ -14,6 +14,7 @@
 	
 (require 'init-elpa)
 (require 'init-company)
+(require 'init-hungry-delete)
 (require 'init-magit)
 (require 'init-keybindings)
 (require 'init-org)
