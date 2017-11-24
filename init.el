@@ -18,6 +18,7 @@
 (require 'init-magit)
 (require 'init-keybindings)
 (require 'init-org)
+(require 'init-popwin)
 (require 'init-smartparens)
 (require 'init-swiper)
 (require 'init-ui)

@@ -14,6 +14,7 @@
 			      company
 			      magit
 			      counsel
+			      popwin
 			      smartparens
 			      swiper
 			      hungry-delete
