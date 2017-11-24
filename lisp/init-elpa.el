@@ -11,11 +11,13 @@
 
 ;; add what ever packages you want here
 (defvar zero4drift-packages '(
-			       company
-			       magit
-				   hungry-delete
-			       solarized-theme
-			       ) "Default packages")
+			      company
+			      magit
+			      counsel
+			      swiper
+			      hungry-delete
+			      solarized-theme
+			      ) "Default packages")
 
 (setq package-selected-packages zero4drift-packages)
 
