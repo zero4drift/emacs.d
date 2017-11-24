@@ -2,6 +2,8 @@
 
 (setq ring-bell-function 'ignore)
 
+(global-auto-revert-mode t)
+
 (global-linum-mode t)
 
 (abbrev-mode t)
