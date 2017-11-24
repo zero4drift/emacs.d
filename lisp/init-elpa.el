@@ -14,6 +14,7 @@
 			      company
 			      magit
 			      counsel
+			      smartparens
 			      swiper
 			      hungry-delete
 			      solarized-theme
