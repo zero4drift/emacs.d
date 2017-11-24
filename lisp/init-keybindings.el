@@ -10,6 +10,9 @@
 ;; shortcut to open init.el
 (global-set-key (kbd "<f12>") 'open-init)
 
+;; shortcut to format buffer or selected region
+(global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
 

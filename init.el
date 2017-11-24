@@ -22,9 +22,9 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (add-to-list
-    'load-path 
-    (expand-file-name "lisp" user-emacs-directory))
-	
+ 'load-path
+ (expand-file-name "lisp" user-emacs-directory))
+
 (require 'init-elpa)
 (require 'init-company)
 (require 'init-hungry-delete)
