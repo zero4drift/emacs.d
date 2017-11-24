@@ -6,7 +6,7 @@
 
 (global-linum-mode t)
 
-(abbrev-mode t)
+(add-hook 'emacs-lisp-mode-hook (lambda () (abbrev-mode t)))
 (define-abbrev-table 'global-abbrev-table '(
 					    ;; signature
 					    ("z4d" "zero4drift")
