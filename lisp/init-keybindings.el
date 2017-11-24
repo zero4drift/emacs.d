@@ -13,6 +13,9 @@
   (find-file "~/.emacs.d/init.el"))
 (global-set-key (kbd "<f12>") 'open-init)
 
+;; bindings for org
+(global-set-key (kbd "C-c a") 'org-agenda)
+
 ;; bindings for swiper
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
