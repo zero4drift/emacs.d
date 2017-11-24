@@ -13,6 +13,9 @@
 ;; shortcut to format buffer or selected region
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
+;; shortcut to auto complete when company not triggered
+(global-set-key (kbd "C-c /") 'hippie-expand)
+
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
 
