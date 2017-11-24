@@ -6,6 +6,10 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
+(defun open-init()
+  (interactive)
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (add-to-list

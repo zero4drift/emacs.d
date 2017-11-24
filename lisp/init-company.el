@@ -1,5 +1,4 @@
 ;; init-company.el
 
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(global-company-mode t)
 (provide 'init-company)

@@ -7,6 +7,10 @@
 (global-linum-mode t)
 
 (abbrev-mode t)
+(define-abbrev-table 'global-abbrev-table '(
+					    ;; signature
+					    ("z4d" "zero4drift")
+					    ))
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)

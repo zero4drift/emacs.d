@@ -8,9 +8,6 @@
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 
 ;; shortcut to open init.el
-(defun open-init()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
 (global-set-key (kbd "<f12>") 'open-init)
 
 ;; bindings for org
