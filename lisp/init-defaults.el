@@ -58,12 +58,18 @@
 (recentf-mode 1)            
 (setq recentf-max-menu-items 25)
 
+;; show parens enhanced
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+(define-advice show-paren-function (:around (fn) fix-show-paren-function)
+  "Hightlight enclosing parens"
+  (cond ((looking-at-p "\\s(") (funcall fn))
+	(t (save-excursion
+	     (ignore-errors (backward-up-list))
+	     (funcall fn)))))
 
 (global-hl-line-mode t)
 
 (electric-indent-mode t)
-
 (delete-selection-mode t)
 
 (provide 'init-defaults)
