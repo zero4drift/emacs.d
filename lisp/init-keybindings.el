@@ -20,7 +20,7 @@
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
 
-;; improve occur and binding for occur
+;; enhancement and binding for occur
 (defun occur-dwim ()
   "Call 'occur' with a same default"
   (interactive)
