@@ -16,6 +16,10 @@
 ;; shortcut to auto complete when company not triggered
 (global-set-key (kbd "C-c /") 'hippie-expand)
 
+;; bindings for dired
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
 
