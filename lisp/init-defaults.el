@@ -33,6 +33,13 @@
 ;; too many typing when emacs asks yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; better defaults for dired
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'always)
+(put 'dired-find-alternate-file 'disabled nil)
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
 (setq ring-bell-function 'ignore)
 
 (global-auto-revert-mode t)
