@@ -35,6 +35,12 @@
   (call-interactively 'occur))
 (global-set-key (kbd "M-s o") 'occur-dwim)
 
+;; bindings for iedit
+(global-set-key (kbd "C-;") 'iedit-mo)
+
+;; bindings for expand-region
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
 

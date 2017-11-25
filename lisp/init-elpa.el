@@ -12,6 +12,8 @@
 ;; add what ever packages you want here
 (defvar zero4drift-packages '(
 			      company
+			      expand-region
+			      iedit
 			      magit
 			      counsel
 			      popwin
