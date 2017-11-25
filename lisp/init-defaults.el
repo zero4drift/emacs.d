@@ -40,6 +40,8 @@
 (setq dired-recursive-deletes 'always)
 (put 'dired-find-alternate-file 'disabled nil)
 
+(setq inhibit-startup-screen -1)
+
 (setq ring-bell-function 'ignore)
 
 (global-auto-revert-mode t)
