@@ -10,7 +10,7 @@
 	 "t"
 	 "Todo"
 	 entry
-	 (file+headline "~/org/gtd.org"  "工作安排")
+	 (file+headline "~/org/gtd.org"  "学习安排")
 	 "* TODO [#B] %?\n %i\n"
 	 :empty-lines 1)))
 
