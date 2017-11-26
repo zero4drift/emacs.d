@@ -11,11 +11,12 @@
 
 ;; add what ever packages you want here
 (defvar zero4drift-packages '(
+			      counsel
 			      company
 			      expand-region
 			      iedit
 			      magit
-			      counsel
+			      org-pomodoro
 			      popwin
 			      smartparens
 			      swiper
