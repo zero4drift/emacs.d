@@ -44,7 +44,7 @@
 (global-set-key (kbd "M-s o") 'occur-dwim)
 
 ;; bindings for iedit
-(global-set-key (kbd "C-;") 'iedit-mo)
+(global-set-key (kbd "C-;") 'iedit-mode)
 
 ;; bindings for expand-region
 (global-set-key (kbd "C-=") 'er/expand-region)
