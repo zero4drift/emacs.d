@@ -35,6 +35,7 @@
 (require 'init-swiper)
 (require 'init-ui)
 (require 'init-defaults)
+(require 'init-which-key)
 (require 'init-keybindings)
 
 (when (file-exists-p custom-file)

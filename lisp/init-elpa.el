@@ -14,14 +14,15 @@
 			      counsel
 			      company
 			      expand-region
+			      hungry-delete
 			      iedit
 			      magit
 			      org-pomodoro
 			      popwin
 			      smartparens
 			      swiper
-			      hungry-delete
 			      solarized-theme
+			      which-key
 			      ) "Default packages")
 
 (setq package-selected-packages zero4drift-packages)
