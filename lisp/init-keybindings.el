@@ -8,6 +8,9 @@
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 
 ;; shortcut to open init.el
+(defun open-init()
+  (interactive)
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
 (global-set-key (kbd "<f12>") 'open-init)
 
 ;; shortcut to format buffer or selected region
@@ -52,7 +55,7 @@
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-;; bindings for swiper
+;; bindings for swiper & counsel & ivy
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
