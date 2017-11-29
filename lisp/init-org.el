@@ -5,7 +5,12 @@
 
 (setq org-src-fontify-natively t)
 
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+
 (setq org-agenda-files '("~/org"))
+
+;; org capture
 (setq org-capture-templates
       '((
 	 "t"

@@ -54,6 +54,7 @@
 
 ;; bindings for org
 (global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 
 ;; bindings for swiper & counsel & ivy
 (global-set-key "\C-s" 'swiper)
