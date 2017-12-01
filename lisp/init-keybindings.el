@@ -60,9 +60,18 @@
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; 子龙山人21天学习emacs视频教程的第14期给了我灵感
+;; 在不同的文件夹中使用不同的文件搜索快捷键很麻烦
+(defun zero4drift-find-file-with-counsel-git-or-counsel-find ()
+  (interactive)
+  (condition-case nil
+      (progn
+	(counsel-locate-git-root)
+	(counsel-git))
+    (error
+     (counsel-find-file))))
+(global-set-key (kbd "C-x C-f") 'zero4drift-find-file-with-counsel-git-or-counsel-find)
 (global-set-key (kbd "C-h C-l") 'counsel-find-library)
-(global-set-key (kbd "C-c g") 'counsel-git)
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 
 ;; bindings for recentf
