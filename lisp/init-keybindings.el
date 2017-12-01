@@ -73,6 +73,7 @@
 (global-set-key (kbd "C-x C-f") 'zero4drift-find-file-with-counsel-git-or-counsel-find)
 (global-set-key (kbd "C-h C-l") 'counsel-find-library)
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 ;; bindings for recentf
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
