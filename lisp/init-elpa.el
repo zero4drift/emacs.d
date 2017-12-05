@@ -4,7 +4,7 @@
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives
-	       '("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/") t)
+	       '("melpa-stable" . "https://elpa.emacs-china.org/melpa-stable/") t)
   )
 
 (require 'cl)
@@ -14,6 +14,7 @@
 			      counsel
 			      company
 			      expand-region
+			      ggtags
 			      hungry-delete
 			      iedit
 			      magit

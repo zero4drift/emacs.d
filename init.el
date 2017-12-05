@@ -23,6 +23,7 @@
 
 (require 'init-elpa)
 (require 'init-company)
+(require 'init-ggtags)
 (require 'init-hungry-delete)
 (require 'init-magit)
 (require 'init-org)
