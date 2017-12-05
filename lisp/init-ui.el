@@ -16,9 +16,18 @@
             ((eq system-type 'windows-nt) '("Consolas"  "Microsoft Yahei"))))
 (set-face-attribute 'default nil :font
                     (format "%s:pixelsize=%d" (car fonts) 14))
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font) charset
-                    (font-spec :family (car (cdr fonts)))))
+(defun s-font ()
+  (interactive)
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+		      charset
+		      (font-spec :family (car (cdr fonts))))))
+(add-to-list 'after-make-frame-functions
+	     (lambda (new-frame)
+	       (select-frame new-frame)
+	       (if window-system
+		   (s-font))))
+
 ;; Fix chinese font width and rescale
 (setq face-font-rescale-alist '(("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2) ("STHeiti". 1.3)))
 
