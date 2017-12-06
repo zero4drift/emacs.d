@@ -3,9 +3,9 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  (add-to-list 'package-archives
-	       '("melpa-stable" . "https://elpa.emacs-china.org/melpa-stable/") t)
-  )
+  (setq package-archives
+	'(("melpa" . "http://elpa.emacs-china.org/melpa/")
+	  ("gnu" . "http://elpa.emacs-china.org/gnu/"))))
 
 (require 'cl)
 
@@ -13,6 +13,7 @@
 (defvar zero4drift-packages '(
 			      counsel
 			      company
+			      ycmd
 			      expand-region
 			      ggtags
 			      hungry-delete
