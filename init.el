@@ -22,6 +22,7 @@
 
 (require 'init-elpa)
 (require 'init-company)
+(require 'init-company-ycmd)
 (require 'init-flycheck)
 (require 'init-flycheck-ycmd)
 (require 'init-ggtags)

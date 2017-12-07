@@ -13,6 +13,7 @@
 (defvar zero4drift-packages '(
 			      counsel
 			      company
+			      company-ycmd
 			      flycheck
 			      flycheck-ycmd
 			      expand-region
