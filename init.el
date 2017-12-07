@@ -17,14 +17,14 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(add-to-list
- 'load-path
+(add-to-list 'load-path
  (expand-file-name "lisp" user-emacs-directory))
 
 (require 'init-elpa)
 (require 'init-company)
+(require 'init-flycheck)
+(require 'init-flycheck-ycmd)
 (require 'init-ggtags)
-(require 'init-ycmd)
 (require 'init-hungry-delete)
 (require 'init-magit)
 (require 'init-org)
@@ -34,6 +34,7 @@
 (require 'init-ui)
 (require 'init-defaults)
 (require 'init-which-key)
+(require 'init-ycmd)
 (require 'init-keybindings)
 
 (when (file-exists-p custom-file)

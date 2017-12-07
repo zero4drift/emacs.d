@@ -13,7 +13,8 @@
 (defvar zero4drift-packages '(
 			      counsel
 			      company
-			      ycmd
+			      flycheck
+			      flycheck-ycmd
 			      expand-region
 			      ggtags
 			      hungry-delete
@@ -25,6 +26,7 @@
 			      swiper
 			      solarized-theme
 			      which-key
+			      ycmd
 			      ) "Default packages")
 
 (setq package-selected-packages zero4drift-packages)
