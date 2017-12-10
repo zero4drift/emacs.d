@@ -1,11 +1,21 @@
 ;; init-defaults.el
 
+;; make symbols look better
+(global-prettify-symbols-mode 1)
+
+;; use fundamental-mode to open large files
+(defun zero4drift-check-large-file ()
+  (when (> (buffer-size) 500000)
+    (progn (fundamental-mode)
+	   (hl-line-mode -1))))
+(add-hook 'find-file-hook 'zero4drift-check-large-file)
+
 ;; encoding system
-(setq language-environment 'utf-8)
+(setq-default language-environment 'utf-8)
 
 ;; functions defined for indent
 (defun indent-buffer ()
-  "Indent the current visited buffer"
+  "Indent the current visited buffer."
   (interactive)
   (indent-region (point-min) (point-max)))
 
@@ -59,9 +69,10 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+(setq-default fill-column 80)
 
-(recentf-mode 1)            
-(setq recentf-max-menu-items 25)
+(recentf-mode 1)
+(setq-default recentf-max-menu-items 25)
 
 ;; show parens enhanced
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
@@ -73,7 +84,6 @@
 	     (funcall fn)))))
 
 (global-hl-line-mode t)
-
 (electric-indent-mode t)
 (delete-selection-mode t)
 
