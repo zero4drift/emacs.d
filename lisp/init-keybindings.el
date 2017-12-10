@@ -11,7 +11,7 @@
 (defun open-init()
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
-(global-set-key (kbd "<f12>") 'open-init)
+(global-set-key (kbd "<f2>") 'open-init)
 
 ;; shortcut to format buffer or selected region
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
