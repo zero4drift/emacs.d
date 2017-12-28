@@ -163,24 +163,32 @@
 (setq dired-recursive-deletes 'always)
 (put 'dired-find-alternate-file 'disabled nil)
 
+;; just do not show the original startup screen
 (setq inhibit-startup-screen -1)
 
+;; ignore the ring bell
 (setq ring-bell-function 'ignore)
 
+;; when the file is modified, the related buffer will change.
 (global-auto-revert-mode t)
 
-(global-linum-mode t)
-
+;; associate e-lisp-mode with abbrev-mode, define an abbrev
 (add-hook 'emacs-lisp-mode-hook (lambda () (abbrev-mode t)))
 (define-abbrev-table 'global-abbrev-table '(
 					    ;; signature
 					    ("z4d" "zero4drift")
 					    ))
 
+;; do not make backup files
 (setq make-backup-files nil)
+
+;; do not auto save
 (setq auto-save-default nil)
+
+;; length of one line should not exceed 80 characters
 (setq-default fill-column 80)
 
+;; active recentf mode and set the max menu items
 (recentf-mode 1)
 (setq-default recentf-max-menu-items 25)
 
@@ -193,8 +201,10 @@
 	     (ignore-errors (backward-up-list))
 	     (funcall fn)))))
 
-(global-hl-line-mode t)
+;; on-the-fly indentation
 (electric-indent-mode t)
+
+;; typed text replaces the selection
 (delete-selection-mode t)
 
 (provide 'init-defaults)
