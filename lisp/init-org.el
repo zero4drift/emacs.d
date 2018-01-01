@@ -2,6 +2,10 @@
 
 (require 'org)
 
+;; allow e-lisp code evaluated in org files
+(org-babel-do-load-languages
+    'org-babel-load-languages '((emacs-lisp . t)))
+
 (setq org-src-fontify-natively t)
 
 (setq org-todo-keywords
