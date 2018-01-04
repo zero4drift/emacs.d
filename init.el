@@ -34,6 +34,7 @@
 (require 'init-swiper)
 (require 'init-ui)
 (require 'init-defaults)
+(require 'init-wttrin)
 (require 'init-which-key)
 (require 'init-ycmd)
 (require 'init-keybindings)
