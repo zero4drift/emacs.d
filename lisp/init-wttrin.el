@@ -2,6 +2,6 @@
 
 (setq wttrin-default-cities '(Hangzhou Pujiang))
 
-(setq wttrin-default-accept-language '("Accept-Language" . "zh-CN"))
+(setq wttrin-default-accept-language '("Accept-Language" . "en-US"))
 
 (provide 'init-wttrin)

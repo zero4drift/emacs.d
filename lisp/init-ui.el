@@ -13,7 +13,7 @@
 ;; <https://github.com/tumashu/cnfonts>
 (set-face-attribute
  'default nil
- :font (font-spec :name "-outline-DejaVu Sans Mono-bold-italic-normal-mono-*-*-*-*-c-*-iso10646-1"
+ :font (font-spec :name "-outline-Source Code Pro-bold-italic-normal-mono-*-*-*-*-c-*-iso10646-1"
                   :weight 'normal
                   :slant 'normal
                   :size 10.0))
@@ -21,7 +21,7 @@
   (set-fontset-font
    (frame-parameter nil 'font)
    charset
-   (font-spec :name "-outline-文泉驿等宽微米黑-normal-normal-normal-sans-*-*-*-*-p-*-iso10646-1"
+   (font-spec :name "-outline-汉仪楷体简-normal-normal-normal-mono-*-*-*-*-c-*-gb2312.1980-0"
               :weight 'normal
               :slant 'normal
               :size 12.0)))
