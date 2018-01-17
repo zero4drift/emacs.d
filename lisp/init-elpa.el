@@ -20,6 +20,7 @@
 			      ggtags
 			      hungry-delete
 			      iedit
+			      ledger-mode
 			      magit
 			      org-pomodoro
 			      popwin

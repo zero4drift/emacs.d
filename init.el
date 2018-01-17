@@ -27,6 +27,7 @@
 (require 'init-flycheck-ycmd)
 (require 'init-ggtags)
 (require 'init-hungry-delete)
+(require 'init-ledger-mode)
 (require 'init-magit)
 (require 'init-org)
 (require 'init-popwin)

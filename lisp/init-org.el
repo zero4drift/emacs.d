@@ -4,7 +4,8 @@
 
 ;; allow e-lisp code evaluated in org files
 (org-babel-do-load-languages
-    'org-babel-load-languages '((emacs-lisp . t)))
+ 'org-babel-load-languages '((emacs-lisp . t)
+			     (ledger . t)))
 
 (setq org-src-fontify-natively t)
 
