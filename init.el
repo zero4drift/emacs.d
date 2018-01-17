@@ -31,7 +31,6 @@
 (require 'init-magit)
 (require 'init-org)
 (require 'init-popwin)
-(require 'init-pyim)
 (require 'init-smartparens)
 (require 'init-swiper)
 (require 'init-ui)

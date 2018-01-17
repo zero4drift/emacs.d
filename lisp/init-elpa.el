@@ -24,8 +24,6 @@
 			      magit
 			      org-pomodoro
 			      popwin
-			      pyim
-			      pyim-basedict
 			      smartparens
 			      swiper
 			      solarized-theme
