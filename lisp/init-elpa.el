@@ -28,7 +28,6 @@
 			      swiper
 			      solarized-theme
 			      which-key
-			      wttrin
 			      ycmd
 			      ) "Default packages")
 
