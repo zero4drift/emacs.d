@@ -13,6 +13,11 @@
 	'(("melpa" . "http://elpa.emacs-china.org/melpa/")
 	  ("gnu" . "http://elpa.emacs-china.org/gnu/"))))
 
+(add-to-list 'load-path
+	     (expand-file-name "lisp" user-emacs-directory))
+
+(require 'use-package)
+
 ;; 设置垃圾回收，在Windows下，emacs25版本会频繁出发垃圾回收，所以需要设置
 (when (eq system-type 'windows-nt)
   (setq gc-cons-threshold (* 512 1024 1024))
@@ -23,9 +28,6 @@
   )
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-(add-to-list 'load-path
-	     (expand-file-name "lisp" user-emacs-directory))
 
 ;; modeline
 (defun mode-line-fill (face reserve)
@@ -234,21 +236,75 @@
 ;; typed text replaces the selection
 (delete-selection-mode t)
 
-(require 'init-company)
-(require 'init-company-ycmd)
-(require 'init-flycheck)
-(require 'init-flycheck-ycmd)
-(require 'init-ggtags)
-(require 'init-hungry-delete)
-(require 'init-ledger-mode)
-(require 'init-magit)
+;; company
+(use-package company
+  :ensure t
+  :init
+  (setq
+   company-idle-delay 0.2
+   company-show-numbers t
+   company-tooltip-align-annotations t
+   company-minimum-prefix-length 3)
+  (global-company-mode)
+  :config
+  (add-to-list 'company-transformers #'company-sort-by-occurrence))
+
+;; ycmd
+(use-package ycmd
+  :if (not (eq system-type 'windows-nt))
+  :ensure t
+  :init
+  (set-variable 'ycmd-server-command `("python" ,(file-truename "~/github/ycmd/ycmd/")))
+  (set-variable 'ycmd-global-config (file-truename "~/github/global-config.py"))
+  (add-hook 'c-mode-hook #'ycmd-mode)
+  (add-hook 'c++-mode-hoook #'ycmd-mode))
+
+;; comany-ycmd
+(use-package company-ycmd
+  :if (not (eq system-type 'windows-nt))
+  :ensure t
+  :after (ycmd)
+  :commands (company-ycmd-setup))
+
+;; flycheck-ycmd
+(use-package flycheck-ycmd
+  :if (not (eq system-type 'windows-nt))
+  :ensure t
+  :after (ycmd)
+  :commands (flycheck-ycmd-setup))
+
+;; flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode))
+
+;; hungry-delete
+(use-package hungry-delete
+  :ensure t
+  :init
+  (global-hungry-delete-mode))
+
+;; ledger-mode
+(use-package ledger-mode
+  :ensure t
+  :mode "\\.ledger\\'"
+  )
+
+;; magit
+(use-package magit
+  :ensure t
+  )
+
+;; org
+
+
 (require 'init-org)
 (require 'init-popwin)
 (require 'init-smartparens)
 (require 'init-swiper)
 (require 'init-ui)
 (require 'init-which-key)
-(require 'init-ycmd)
 (require 'init-keybindings)
 
 (when (file-exists-p custom-file)
