@@ -1,5 +1,6 @@
 ### EMACS ###
 *.el~
+abbrev-defs
 auto-save-list/
 server/
 eshell/
