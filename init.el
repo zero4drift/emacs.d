@@ -421,7 +421,7 @@
   (company-show-numbers t)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
-  :init
+  :config
   (global-company-mode)
   (add-to-list 'company-transformers #'company-sort-by-occurrence)
   :bind
@@ -456,13 +456,13 @@
 ;; flycheck
 (use-package flycheck
   :ensure t
-  :init
+  :config
   (global-flycheck-mode))
 
 ;; hungry-delete
 (use-package hungry-delete
   :ensure t
-  :init
+  :config
   (global-hungry-delete-mode))
 
 ;; ledger-mode
@@ -489,29 +489,19 @@
 
 ;; swiper
 (use-package swiper
+  :demand
   :ensure t
+  :config
+  (ivy-mode 1)
+  (counsel-mode 1)
   :bind
   ("\C-s" . swiper)
   ("C-c C-r" . ivy-resume)
-  ("M-x" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-h f" . cunsel-describe-function)
-  ("C-h v" . counsel-describe-variable)
-  ("C-h C-l" . counsel-find-library)
-  ("C-h C-i" . counsel-info-lookup-symbol)
-  ("C-h u" . counsel-unicode-char)
-  ("C-c g" . counsel-git)
-  ("C-c j" . counsel-git-grep)
-  ("C-c k" . counsel-ag)
-  ("C-x l" . counsel-locate)
-  ("C-S-o" . counsel-rhythmbox)
   (:map minibuffer-local-map
 	("C-r" . counsel-minibuffer-history))
   :custom
   (ivy-use-virtual-buffers t)
-  (enable-recursive-minibuffers t)
-  :config
-  (ivy-mode 1))
+  (enable-recursive-minibuffers t))
 
 ;; solarized-theme
 (use-package solarized-theme
