@@ -487,9 +487,13 @@
   :init (require 'smartparens-config)
   :hook (prog-mode . smartparens-mode))
 
+;; counsel
+(use-package counsel
+  :ensure t)
+
 ;; swiper
 (use-package swiper
-  :demand
+  :after (counsel)
   :ensure t
   :config
   (ivy-mode 1)
