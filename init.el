@@ -66,7 +66,7 @@
   (set-fontset-font
    (frame-parameter nil 'font)
    charset
-   (font-spec :name "汉仪楷体简"
+   (font-spec :name "Source Han Sans"
               :weight 'normal
               :slant 'normal
               :size 12.0)))
