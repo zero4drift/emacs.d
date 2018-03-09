@@ -1,4 +1,5 @@
 ### EMACS ###
+custom.el
 *.el~
 abbrev-defs
 auto-save-list/
@@ -8,3 +9,4 @@ recentf
 /elpa
 /tutorial
 /bookmarks
+/pyim
