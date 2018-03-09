@@ -13,7 +13,8 @@
   (package-initialize)
   (setq package-archives
 	'(("melpa" . "http://elpa.emacs-china.org/melpa/")
-	  ("gnu" . "http://elpa.emacs-china.org/gnu/"))))
+	  ("gnu" . "http://elpa.emacs-china.org/gnu/")
+	  ("org" . "http://elpa.emacs-china.org/org/"))))
 
 (eval-when-compile
   (require 'use-package))
@@ -91,23 +92,23 @@
       buf-coding)))
 
 (setq-default my-flycheck-mode-line
-      '(:eval
-	(pcase flycheck-last-status-change
-	  (`not-checked nil)
-	  (`no-checker (propertize " -" 'face 'warning))
-	  (`running (propertize " ✷" 'face 'success))
-	  (`errored (propertize " !" 'face 'error))
-	  (`finished
-	   (let* ((error-counts (flycheck-count-errors flycheck-current-errors))
-		  (no-errors (cdr (assq 'error error-counts)))
-		  (no-warnings (cdr (assq 'warning error-counts)))
-		  (face (cond (no-errors 'error)
-			      (no-warnings 'warning)
-			      (t 'success))))
-	     (propertize (format "[%s/%s]" (or no-errors 0) (or no-warnings 0))
-			 'face face)))
-	  (`interrupted " -")
-	  (`suspicious '(propertize " ?" 'face 'warning)))))
+	      '(:eval
+		(pcase flycheck-last-status-change
+		  (`not-checked nil)
+		  (`no-checker (propertize " -" 'face 'warning))
+		  (`running (propertize " ✷" 'face 'success))
+		  (`errored (propertize " !" 'face 'error))
+		  (`finished
+		   (let* ((error-counts (flycheck-count-errors flycheck-current-errors))
+			  (no-errors (cdr (assq 'error error-counts)))
+			  (no-warnings (cdr (assq 'warning error-counts)))
+			  (face (cond (no-errors 'error)
+				      (no-warnings 'warning)
+				      (t 'success))))
+		     (propertize (format "[%s/%s]" (or no-errors 0) (or no-warnings 0))
+				 'face face)))
+		  (`interrupted " -")
+		  (`suspicious '(propertize " ?" 'face 'warning)))))
 
 (setq-default mode-line-format
 	      (list
@@ -310,96 +311,222 @@
 
 ;; org
 (use-package org
-  :ensure t
-  :bind
-  ("C-c a" . org-agenda)
-  ("C-c c" . org-capture)
-  ("C-c C-x t" . org-clock-sum-today-by-tags)
-  :init
-  ;; used by org-clock-sum-today-by-tags
-  ;; copied from 用Org-mode实践《奇特的一生》
-  (defun filter-by-tags ()
-    (let ((head-tags (org-get-tags-at)))
-      (member current-tag head-tags)))
-
-  (defun org-clock-sum-today-by-tags (timerange &optional tstart tend noinsert)
-    (interactive "P")
-    (let* ((timerange-numeric-value (prefix-numeric-value timerange))
-	   (files (org-add-archive-files (org-agenda-files)))
-	   (include-tags '("READING" "JOBS" "WORKOUT"
-			   "LEARNING" "OTHER"))
-	   (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
-	   (output-string "")
-	   (tstart (or tstart
-		       (and timerange (equal timerange-numeric-value 4) (- (org-time-today) 86400))
-		       (and timerange (equal timerange-numeric-value 16) (org-read-date nil nil nil "Start Date/Time:"))
-		       (org-time-today)))
-	   (tend (or tend
-		     (and timerange (equal timerange-numeric-value 16) (org-read-date nil nil nil "End Date/Time:"))
-		     (+ tstart 86400)))
-	   h m file item prompt donesomething)
-      (while (setq file (pop files))
-	(setq org-agenda-buffer (if (file-exists-p file)
-				    (org-get-agenda-file-buffer file)
-				  (error "No such file %s" file)))
-	(with-current-buffer org-agenda-buffer
-	  (dolist (current-tag include-tags)
-	    (org-clock-sum tstart tend 'filter-by-tags)
-	    (setcdr (assoc current-tag tags-time-alist)
-		    (+ org-clock-file-total-minutes (cdr (assoc current-tag tags-time-alist)))))))
-      (while (setq item (pop tags-time-alist))
-	(unless (equal (cdr item) 0)
-	  (setq donesomething t)
-	  (setq h (/ (cdr item) 60)
-		m (- (cdr item) (* 60 h)))
-	  (setq output-string (concat output-string (format "[-%s-] %.2d:%.2d\n" (car item) h m)))))
-      (unless donesomething
-	(setq output-string (concat output-string "[-Nothing-] Done nothing!!!\n")))
-      (unless noinsert
-	(insert output-string))
-      output-string))
-  :config
+  :ensure org-plus-contrib
+  :mode ("\\.org\\'" . org-mode)
+  :custom
   ;; allow e-lisp code evaluated in org files
   (org-babel-do-load-languages
    'org-babel-load-languages '((emacs-lisp . t)
 			       (ledger . t)))
-  :custom
   (org-src-fontify-natively t)
   ;; move org clock info into drawer
-  (org-clock-into-drawer t)
+  ;;(org-clock-into-drawer t)
   ;; move org log info into drawer
   (org-log-into-drawer t)
+  (org-log-done 'time)
+  (org-log-state-notes-insert-after-drawers nil)
+  (org-tag-alist (quote (("@errand" . ?e)
+			 ("@office" . ?o)
+			 ("@home" . ?h)
+			 ("@school" . ?s)
+			 (:newline)
+			 ("WAITING" . ?w)
+			 ("HOLD" . ?H)
+			 ("CANCELLED" . ?c))))
+  (org-fast-tag-selection-single-key nil)
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+  (org-refile-allow-creating-parent-nodes 'cofirm)
+  (org-refile-targets '(("next.org" :level . 0)
+			    ("someday.org" :level . 0)
+			    ("projects.org" :maxlevel . 1)))
+  (org-return-follows-link t)
   (org-todo-keywords
-   '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-  (org-agenda-files '("~/org"))
-  (org-tag-alist
-   '(("JOBS" . ?j)
-     ("LEARNING" . ?l)
-     ("OTHER" . ?o)
-     ("READING" . ?r)
-     ("WORKOUT" . ?w)))
-  (org-capture-templates '(("i"
-			    "Quick thoughts put in inbox, 'wait' state assigned at first"
-			    entry
-			    (file+headline "~/org/gtd.org"  "Inbox")
-			    "* WAIT %?\n %i\n"
-			    :empty-lines 1)
-			   ("t"
-			    "Simple todo tasks, which are too trivial to be grouped"
-			    entry
-			    (file+headline "~/org/gtd.org"  "Tasks")
-			    "* TODO [#C] %?\n %i\n"
-			    :empty-lines 1)
-			   ("r"
-			    "Tasks better treated as reminders"
-			    entry
-			    (file+headline "~/org/gtd.org"  "Remind")
-			    "* TODO [#C] %?\n %i\n"
-			    :empty-lines 1))))
+   '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+     (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture)
+   ("C-c l" . org-store-link)
+   ("C-c b" . org-iswitchb)
+   :map org-mode-map
+   ("M-n" . outline-next-visible-heading)
+   ("M-p" . outline-previous-visible-heading))
+  :config
+  (add-to-list 'org-structure-template-alist
+	       '("el" "#+BEGIN_SRCemacs-lisp :tangle yes?\n\n#+END_SRC")))
 
+(require 'find-lisp)
+(setq zero4drift/org-agenda-directory "~/.org/gtd/")
+(setq org-agenda-files (find-lisp-find-files zero4drift/org-agenda-directory "\.org$"))
+
+;; Stage 1: Collecting
+(setq org-capture-templates `(("i" "inbox"
+			       entry (file "~/.org/gtd/inbox.org")
+			       "* TODO %?")
+			      ("e" "email"
+			       entry (file+headline "~/.org/gtd/projects.org" "Emails")
+			       "* TODO [#A] Reply:%a :@home:@school:" :immediate-finisht)
+			      ("w" "Weekly Review"
+			       entry (file+olp+datetree "~/.org/gtd/reviews.org")
+			       (file "~/.org/gtd/templates/weekly_review.org"))
+			      ("s" "Snippet"
+			       entry (file "~/.org/deft/capture.org")
+			       "* Snippet %<%Y-%m-%d %H:%M>\n%?")))
+
+;; Stage 2: Processing
+(require 'org-agenda)
+(setq zero4drift/org-agenda-inbox-view
+      `("i" "Inbox" todo ""
+	((org-agenda-files '("~/.org/gtd/inbox.org")))))
+(setq zero4drift/org-agenda-someday-view
+      `("s" "Someday" todo ""
+	((org-agenda-files '("~/.org/gtd/someday.org")))))
+
+(defun zero4drift/org-rename-item ()
+  (interactive)
+  (save-excursion
+    (when (org-at-heading-p)
+      (let* ((hl-text (nth 4 (org-heading-components)))
+	     (new-header (read-string "New Text: " nil nil hl-text)))
+	(unless (or (null hl-text)
+		    (org-string-match-p "^[ \t]*:[^:]+:$" hl-text))
+	  (beginning-of-line)
+	  (search-forward hl-text (point-at-eol))
+	  (replace-string
+	   hl-text
+	   new-header
+	   nil (- (point) (length hl-text)) (point)))))))
+
+(defun zero4drift/org-agenda-process-inbox-item (&optional goto rfloc no-update)
+  (interactive "P")
+  (org-with-wide-buffer
+   (org-agenda-set-tags)
+   (org-agenda-priority)
+   (org-agenda-set-effort)
+   (org-agenda-refile nil nil t)
+   ;; (org-mark-ring-push)
+   ;; (org-refile-goto-last-stored)
+   ;; (zero4drift/org-rename-item)
+   ;; (org-mark-ring-goto)
+   (org-agenda-redo)))
+
+(defun zero4drift/org-inbox-capture ()
+  "Capture a task in agenda mode."
+  (interactive)
+  (org-capture nil "i"))
+
+(define-key org-agenda-mode-map "i" 'org-agenda-clock-in)
+(define-key org-agenda-mode-map "r" 'zero4drift/org-agenda-process-inbox-item)
+(define-key org-agenda-mode-map "R" 'org-agenda-refile)
+(define-key org-agenda-mode-map "c" 'zero4drift/org-inbox-capture)
+
+(defvar zero4drift/new-project-template
+  "
+    *Project Purpose/Principles*:
+
+    *Project Outcome*:
+    "
+  "Project template, inserted when a new project is created")
+
+(defvar zero4drift/is-new-project nil
+  "Boolean indicating whether it's during the creation of a new project")
+
+(defun zero4drift/refile-new-child-advice (orig-fun parent-target child)
+  (let ((res (funcall orig-fun parent-target child)))
+    (save-excursion
+      (find-file (nth 1 parent-target))
+      (goto-char (org-find-exact-headline-in-buffer child))
+      (org-add-note)
+      )
+    res))
+
+(advice-add 'org-refile-new-child :around #'zero4drift/refile-new-child-advice)
+
+(defun zero4drift/set-todo-state-next ()
+  "Visit each parent task and change NEXT states to TODO"
+  (org-todo "NEXT"))
+
+(add-hook 'org-clock-in-hook 'zero4drift/set-todo-state-next 'append)
+
+;; Stage 3: Reviewing
+(setq org-agenda-block-separator nil)
+(setq org-agenda-start-with-log-mode t)
+(setq zero4drift/org-agenda-todo-view
+      `(" " "Agenda"
+	((agenda ""
+		 ((org-agenda-span 'day)
+		  (org-deadline-warning-days 365)))
+	 (todo "TODO"
+	       ((org-agenda-overriding-header "To Refile")
+		(org-agenda-files '("~/.org/gtd/inbox.org"))))
+	 (todo "NEXT"
+	       ((org-agenda-overriding-header "In Progress")
+		(org-agenda-files '("~/.org/gtd/someday.org"
+				    "~/.org/gtd/projects.org"
+				    "~/.org/gtd/next.org"))
+		;; (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))
+		))
+	 (todo "TODO"
+	       ((org-agenda-overriding-header "Todo")
+		(org-agenda-files '("~/.org/gtd/projects.org"
+				    "~/.org/gtd/next.org"))
+		(org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+	 nil)))
+
+(defun zero4drift/org-agenda-skip-all-siblings-but-first ()
+  "Skip all but the first non-done entry."
+  (let (should-skip-entry)
+    (unless (or (org-current-is-todo)
+		(not (org-get-scheduled-time (point))))
+      (setq should-skip-entry t))
+    (save-excursion
+      (while (and (not should-skip-entry) (org-goto-sibling t))
+	(when (org-current-is-todo)
+	  (setq should-skip-entry t))))
+    (when should-skip-entry
+      (or (outline-next-heading)
+	  (goto-char (point-max))))))
+
+(defun org-current-is-todo ()
+  (string= "TODO" (org-get-todo-state)))
+
+(defun zero4drift/switch-to-agenda ()
+  (interactive)
+  (org-agenda nil " ")
+  (delete-other-windows))
+
+(bind-key "<f1>" 'zero4drift/switch-to-agenda)
+
+;; Column View
+(setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:}
+  %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled)
+  %DEADLINE(Deadline)")
+
+(setq org-agenda-custom-commands
+      `(,zero4drift/org-agenda-inbox-view
+	,zero4drift/org-agenda-someday-view
+	,zero4drift/org-agenda-todo-view))
+
+;; Stage 4: Doing
 ;; org-pomodoro
 (use-package org-pomodoro
-  :ensure t)
+  :ensure t
+  :bind
+  (:map org-agenda-mode-map
+	(("I" . org-pomodoro)))
+  :custom
+  (org-pomodoro-format "%s"))
+
+;; deft
+(use-package deft
+  :ensure t
+  :bind
+  (("C-c n" . deft))
+  :custom
+  (deft-default-extension "org")
+  (deft-directory "~/.org/deft/")
+  (deft-use-filename-as-title t))
 
 ;; iedit
 (use-package iedit
@@ -437,7 +564,7 @@
   :ensure t
   :custom
   (ycmd-server-command `("python" ,(file-truename "~/github/ycmd/ycmd/")))
-  (ycmd-global-config (file-truename "~/github/global-config.py"))
+  (ycmd-global-config (file-truename "~/github/.ycm_extra_conf.py"))
   :hook
   ((c-mode c++-mode) . ycmd-mode))
 
@@ -499,10 +626,10 @@
   (ivy-mode 1)
   (counsel-mode 1)
   :bind
-  ("\C-s" . swiper)
-  ("C-c C-r" . ivy-resume)
-  (:map minibuffer-local-map
-	("C-r" . counsel-minibuffer-history))
+  (("\C-s" . swiper)
+   ("C-c C-r" . ivy-resume)
+   :map minibuffer-local-map
+   ("C-r" . counsel-minibuffer-history))
   :custom
   (ivy-use-virtual-buffers t)
   (enable-recursive-minibuffers t))
