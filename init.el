@@ -532,13 +532,13 @@
 (use-package iedit
   :ensure t
   :bind
-  ("C-;" . iedit-mode))
+  (("C-;" . iedit-mode)))
 
 ;; expand-region
 (use-package expand-region
   :ensure t
   :bind
-  ("C-=". er/expand-region))
+  (("C-=". er/expand-region)))
 
 ;; company
 (use-package company
@@ -601,7 +601,7 @@
 (use-package magit
   :ensure t
   :bind
-  ("C-x g" . magit-status))
+  (("C-x g" . magit-status)))
 
 ;; popwin
 (use-package popwin
