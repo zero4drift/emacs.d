@@ -564,7 +564,6 @@
   :ensure t
   :custom
   (ycmd-server-command `("python" ,(file-truename "~/github/ycmd/ycmd/")))
-  (ycmd-global-config (file-truename "~/github/.ycm_extra_conf.py"))
   :hook
   ((c-mode c++-mode) . ycmd-mode))
 
