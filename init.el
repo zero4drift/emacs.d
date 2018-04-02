@@ -425,13 +425,7 @@
   (deft-text-mode 'org-mode)
   (deft-use-filter-string-for-filename t)
   (deft-org-mode-title-prefix t)
-  (deft-use-filename-as-title nil)
-  (deft-strip-summary-regexp
-	(concat "\\("
-		"[\n\t]" ;; blank
-		"\\|^#\\+[[:upper:]_]+:.*$" ;; org-mode metadata
-		"\\|^#\\+[[:alnum:]_]+:.*$" ;; org-mode metadata
-		"\\)")))
+  (deft-use-filename-as-title t))
 
 ;; iedit
 (use-package iedit
