@@ -462,7 +462,7 @@
   :if (not (eq system-type 'windows-nt))
   :ensure t
   :custom
-  (ycmd-server-command `("python" ,(file-truename "~/github/ycmd/ycmd/")))
+  (ycmd-extra-conf-whitelist '("~/github/*"))
   (ycmd-startup-timeout 5)
   :hook
   ((c-mode c++-mode) . ycmd-mode))
