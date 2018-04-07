@@ -463,6 +463,7 @@
   :ensure t
   :custom
   (ycmd-server-command `("python" ,(file-truename "~/github/ycmd/ycmd/")))
+  (ycmd-startup-timeout 5)
   :hook
   ((c-mode c++-mode) . ycmd-mode))
 
