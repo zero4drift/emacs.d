@@ -549,9 +549,18 @@
 
 ;; pyim Chinese input method
 (use-package pyim
+  :after (ivy)
   :ensure t
   :demand t
   :config
+  ;; 让swiper 支持 pyim
+  (defun eh-ivy-cregexp(str)
+    (if (string-match-p "^\\." str)
+	(pyim-cregexp-build(substring str 1))
+      (ivy--regex-plus str)))
+
+  (setq ivy-re-builders-alist
+	'((t . eh-ivy-cregexp)))
   ;; 激活 basedict 拼音词库
   (use-package pyim-basedict
     :ensure t
