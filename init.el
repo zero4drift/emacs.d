@@ -660,6 +660,18 @@
 ;; end evil confs
 ;; end use-packages
 
+;; youdao-dictionary
+(use-package youdao-dictionary
+  :ensure t
+  :after popwin
+  :config
+  (push "*Youdao Dictionary*" popwin:special-display-config)
+  :custom
+  (url-automatic-caching t)
+  (youdao-dictionary-search-histroy-file "~/.emacs.d/.youdao")
+  :bind
+  (("C-c y" . 'youdao-dictionary-search-at-point)))
+
 
 ;; modeline
 (defun mode-line-fill (face reserve)
