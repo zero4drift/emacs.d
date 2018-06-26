@@ -449,7 +449,6 @@
   (company-minimum-prefix-length 3)
   :config
   (global-company-mode)
-  (add-to-list 'company-transformers #'company-sort-by-occurrence)
   :bind
   (:map company-active-map
 	("M-n" . nil)
@@ -457,33 +456,74 @@
 	("C-n" . #'company-select-next)
 	("C-p" . #'company-select-previous)))
 
-;; ycmd
-(use-package ycmd
-  :if (not (eq system-type 'windows-nt))
+;; ;; ycmd
+;; (use-package ycmd
+;;   :if (not (eq system-type 'windows-nt))
+;;   :ensure t
+;;   :custom
+;;   (ycmd-extra-conf-whitelist '("~/github/*"))
+;;   (ycmd-startup-timeout 5)
+;;   :hook
+;;   ((c-mode c++-mode) . ycmd-mode))
+
+;; ;; comany-ycmd
+;; (use-package company-ycmd
+;;   :if (not (eq system-type 'windows-nt))
+;;   :ensure t
+;;   :hook (ycmd-mode . company-ycmd-setup))
+
+;; ;; flycheck-ycmd
+;; (use-package flycheck-ycmd
+;;   :if (not (eq system-type 'windows-nt))
+;;   :ensure t
+;;   :hook (ycmd-mode . flycheck-ycmd-setup))
+
+;; cquery
+(use-package cquery
+  :ensure t
+  :init
+  (setq cquery-executable "/home/fang/github/cquery/build/release/bin/cquery")
+  (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
+  :config
+  :commands lsp-cquery-enable
+  :hook
+  ((c-mode c++-mode) .
+   (lambda ()
+     (require 'company-lsp)
+     (lsp-cquery-enable))))
+
+(use-package ivy-xref
+  :ensure t
+  :init
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+(use-package lsp-ui
+  :after evil
+  :ensure t
+  :hook
+  (lsp-mode . lsp-ui-mode)
+  :config
+  (define-key evil-normal-state-map (kbd "M-.") 'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] 'lsp-ui-peek-find-references)
+  (define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
+  (define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward))
+
+(use-package company-lsp
+  :defer t
   :ensure t
   :custom
-  (ycmd-extra-conf-whitelist '("~/github/*"))
-  (ycmd-startup-timeout 5)
-  :hook
-  ((c-mode c++-mode) . ycmd-mode))
-
-;; comany-ycmd
-(use-package company-ycmd
-  :if (not (eq system-type 'windows-nt))
-  :ensure t
-  :hook (ycmd-mode . company-ycmd-setup))
-
-;; flycheck-ycmd
-(use-package flycheck-ycmd
-  :if (not (eq system-type 'windows-nt))
-  :ensure t
-  :hook (ycmd-mode . flycheck-ycmd-setup))
+  (company-quickhelp-delay 0)
+  (company-lsp-async t)
+  (company-lsp-cache-candidates nil)
+  :config
+  (push 'company-lsp company-backends))
+;; ends cquery
 
 ;; flycheck
 (use-package flycheck
   :ensure t
-  :config
-  (global-flycheck-mode))
+  :hook
+  (prog-mode . flycheck-mode))
 
 ;; hungry-delete
 (use-package hungry-delete
@@ -577,14 +617,14 @@
   ;; 2. 光标前是汉字字符时，才能输入中文。
   ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
   (setq-default pyim-english-input-switch-functions
-                '(pyim-probe-dynamic-english
-                  pyim-probe-isearch-mode
-                  pyim-probe-program-mode
-                  pyim-probe-org-structure-template))
+		'(pyim-probe-dynamic-english
+		  pyim-probe-isearch-mode
+		  pyim-probe-program-mode
+		  pyim-probe-org-structure-template))
 
   (setq-default pyim-punctuation-half-width-functions
-                '(pyim-probe-punctuation-line-beginning
-                  pyim-probe-punctuation-after-punctuation))
+		'(pyim-probe-punctuation-line-beginning
+		  pyim-probe-punctuation-after-punctuation))
 
   ;; 开启拼音搜索功能
   (pyim-isearch-mode 1)
@@ -599,7 +639,7 @@
 
   ;; 让 Emacs 启动时自动加载 pyim 词库
   (add-hook 'emacs-startup-hook
-            #'(lambda () (pyim-restart-1 t)))
+	    #'(lambda () (pyim-restart-1 t)))
   :bind
   (("M-j" . pyim-convert-code-at-point) ;与 pyim-probe-dynamic-english 配合
    ("C-." . pyim-delete-word-from-personal-buffer)))
@@ -626,27 +666,27 @@
   :config
   (global-evil-leader-mode)
   (evil-leader/set-key
-   "ff" 'find-file
-   "bb" 'switch-to-buffer
-   "0"  'select-window-0
-   "1"  'select-window-1
-   "2"  'select-window-2
-   "3"  'select-window-3
-   "w/" 'split-window-right
-   "w-" 'split-window-below
-   ":"  'counsel-M-x
-   "wM" 'delete-other-windows
-   ;; evil-nerd-commenter
-   "ci" 'evilnc-comment-or-uncomment-lines
-   "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-   "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-   "cc" 'evilnc-copy-and-comment-lines
-   "cp" 'evilnc-comment-or-uncomment-paragraphs
-   "cr" 'comment-or-uncomment-region
-   "cv" 'evilnc-toggle-invert-comment-line-by-line
-   "."  'evilnc-copy-and-comment-operator
-   "\\" 'evilnc-comment-operator ; if you prefer backslash key
-   ))
+    "ff" 'find-file
+    "bb" 'switch-to-buffer
+    "0"  'select-window-0
+    "1"  'select-window-1
+    "2"  'select-window-2
+    "3"  'select-window-3
+    "w/" 'split-window-right
+    "w-" 'split-window-below
+    ":"  'counsel-M-x
+    "wM" 'delete-other-windows
+    ;; evil-nerd-commenter
+    "ci" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "cc" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    "."  'evilnc-copy-and-comment-operator
+    "\\" 'evilnc-comment-operator ; if you prefer backslash key
+    ))
 
 ;; evil-surround
 (use-package evil-surround
@@ -654,7 +694,7 @@
   :config (global-evil-surround-mode))
 
 ;; evil-mode
-(use-package  evil
+(use-package evil
   :ensure t
   :config (evil-mode 1))
 ;; end evil confs
