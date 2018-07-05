@@ -16,6 +16,16 @@
 	  ("gnu" . "http://elpa.emacs-china.org/gnu/")
 	  ("org" . "http://elpa.emacs-china.org/org/"))))
 
+;; to estimate start-up time usage
+(defconst emacs-start-time (current-time))
+(add-hook 'after-init-hook
+	  `(lambda ()
+	     (let ((elapsed (float-time (time-subtract (current-time)
+						       emacs-start-time))))
+	       (message "Loading %s...done (%.3fs) [after-init]"
+			,load-file-name elapsed)))
+	  t)
+
 (eval-when-compile
   (require 'use-package))
 
@@ -848,7 +858,6 @@
 				   (concat (format-time-string "%c; ")
 					   (emacs-uptime "Uptime:%hh"))))))
 ;; end modeline
-
 
 (provide 'init)
 ;;; init.el ends here
