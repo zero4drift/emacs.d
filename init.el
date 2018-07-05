@@ -543,8 +543,13 @@
 
 ;; ledger-mode
 (use-package ledger-mode
+  :init
+  (defun open-ledger()
+    (interactive)
+    (find-file "~/.accounting/2018.ledger"))
   :ensure t
-  :mode "\\.ledger$")
+  :mode "\\.ledger$"
+  :bind (([f3] . open-ledger)))
 
 ;; magit
 (use-package magit
