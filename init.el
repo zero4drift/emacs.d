@@ -566,7 +566,7 @@
 (use-package smartparens
   :ensure t
   :init (require 'smartparens-config)
-  :hook (lisp-mode . smartparens-mode))
+  :hook (prog-mode . smartparens-mode))
 
 ;; counsel
 (use-package counsel
