@@ -56,9 +56,6 @@
 ;; just do not show the original startup screen
 (setq inhibit-startup-screen -1)
 
-;; ignore the ring bell
-(setq ring-bell-function 'ignore)
-
 ;; too many typing when emacs asks yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
