@@ -417,7 +417,8 @@
   (:map org-agenda-mode-map
 	(("I" . org-pomodoro)))
   :custom
-  (org-pomodoro-format "%s"))
+  (org-pomodoro-format "%s")
+  (org-pomodoro-audio-player (executable-find "mplayer")))
 
 ;; deft
 (use-package deft
