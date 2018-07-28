@@ -767,6 +767,17 @@
   :bind
   (("C-c y" . 'youdao-dictionary-search-at-point)))
 
+;; mail-agent wanderlust
+(autoload 'wl "wl" "Wanderlust" t)
+(if (boundp 'mail-user-agent)
+    (setq mail-user-agent 'wl-user-agent))
+(if (fboundp 'define-mail-user-agent)
+    (define-mail-user-agent
+      'wl-user-agent
+      'wl-user-agent-compose
+      'wl-draft-send
+      'wl-draft-kill
+      'mail-send-hook))
 
 ;; modeline
 (defun mode-line-fill (face reserve)
