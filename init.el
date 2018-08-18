@@ -763,6 +763,7 @@
   (display-line-numbers-width 2)
   (display-line-numbers-grow-only t)
   :init
+  (set-face-font 'line-number "Dejavu Sans Mono")
   (set-face-background 'line-number-current-line "#859900")
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
@@ -890,7 +891,7 @@
 	       (mode-line-fill 'mode-line 20)
 
 	       ;; line and column
-	       "(" ;; '%02' to set to 2 chars at least; prevents flickering
+	       
 	       (propertize "%02l" 'face 'font-lock-type-face) ","
 	       (propertize "%02c" 'face 'font-lock-type-face)
 	       ") "
