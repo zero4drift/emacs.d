@@ -39,8 +39,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (setq-default cursor-type 'bar)
-(global-linum-mode t)
-(global-hl-line-mode t)
 
 ;; just do not show the original startup screen
 (setq inhibit-startup-screen -1)
@@ -758,6 +756,17 @@
 
 ;; mail-agent wanderlust
 (autoload 'wl "wl" "Wanderlust" t)
+
+;; built-in display-line-mode
+(use-package display-line-numbers
+  :custom
+  (display-line-numbers-width 2)
+  (display-line-numbers-grow-only t)
+  :init
+  (set-face-background 'line-number-current-line "#859900")
+  :hook
+  ((prog-mode text-mode) . #'display-line-numbers-mode))
+
 
 ;; modeline
 (defun mode-line-fill (face reserve)
