@@ -429,7 +429,7 @@
 (use-package iedit
   :ensure t
   :bind
-  (("C-;" . iedit-mode)))
+  (("C-:" . iedit-mode)))
 
 ;; expand-region
 (use-package expand-region
