@@ -412,6 +412,9 @@
   :ensure t
   :bind
   (("C-c n" . deft))
+  :config
+  ;; No deft summary
+  (defun deft-parse-summary (contents title))
   :custom
   (deft-default-extension "org")
   (deft-directory "~/.org/deft/")
