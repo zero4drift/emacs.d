@@ -513,6 +513,7 @@
   (company-quickhelp-delay 1)
   (company-lsp-async t)
   (company-lsp-cache-candidates nil)
+  (company-lsp-enable-recompletion t)
   :config
   (push 'company-lsp company-backends))
 ;; ends cquery
