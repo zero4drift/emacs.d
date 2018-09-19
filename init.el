@@ -441,7 +441,7 @@
 (use-package company
   :ensure t
   :custom
-  (company-idle-delay 0.5)
+  (company-idle-delay 1)
   (company-show-numbers t)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
@@ -899,7 +899,7 @@
 	       (mode-line-fill 'mode-line 20)
 
 	       ;; line and column
-	       
+	       "("
 	       (propertize "%02l" 'face 'font-lock-type-face) ","
 	       (propertize "%02c" 'face 'font-lock-type-face)
 	       ") "
