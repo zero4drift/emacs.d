@@ -510,7 +510,7 @@
   :defer t
   :ensure t
   :custom
-  (company-quickhelp-delay 0)
+  (company-quickhelp-delay 1)
   (company-lsp-async t)
   (company-lsp-cache-candidates nil)
   :config
