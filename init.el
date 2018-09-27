@@ -518,6 +518,11 @@
   (push 'company-lsp company-backends))
 ;; ends cquery
 
+;; google-c-style
+(use-package google-c-style
+  :hook
+  ((c-mode c++-mode) . google-set-c-style))
+
 ;; flycheck
 (use-package flycheck
   :ensure t
