@@ -1,4 +1,4 @@
-;; Grouped init.el enhanced by use-package
+;;; Grouped init.el enhanced by use-package
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -517,11 +517,6 @@
   :config
   (push 'company-lsp company-backends))
 ;; ends cquery
-
-;; google-c-style
-(use-package google-c-style
-  :hook
-  ((c-mode c++-mode) . google-set-c-style))
 
 ;; flycheck
 (use-package flycheck
