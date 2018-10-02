@@ -445,6 +445,7 @@
   (company-show-numbers t)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
+  (company-clang-arguments "-std=c++11")
   :config
   (global-company-mode)
   :bind
@@ -475,6 +476,9 @@
 ;;   :if (not (eq system-type 'windows-nt))
 ;;   :ensure t
 ;;   :hook (ycmd-mode . flycheck-ycmd-setup))
+
+;; C++-mode
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;; cquery
 (use-package cquery
@@ -521,6 +525,8 @@
 ;; flycheck
 (use-package flycheck
   :ensure t
+  :custom
+  (flycheck-clang-args "-std=c++11")
   :hook
   (prog-mode . flycheck-mode))
 
