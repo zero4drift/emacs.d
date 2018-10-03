@@ -95,7 +95,7 @@
 (defun open-init()
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
-(global-set-key (kbd "<f2>") 'open-init)
+(global-set-key (kbd "<f3>") 'open-init)
 
 ;; shortcut to find function, variable
 (global-set-key (kbd "C-h C-f") 'find-function)
@@ -544,7 +544,7 @@
     (find-file "~/.accounting/2018.ledger"))
   :ensure t
   :mode "\\.ledger$"
-  :bind (([f3] . open-ledger)))
+  :bind (([f4] . open-ledger)))
 
 ;; magit
 (use-package magit
@@ -625,11 +625,29 @@
   (ivy-use-virtual-buffers t)
   (enable-recursive-minibuffers t))
 
-;; solarized-theme
-(use-package solarized-theme
+;; neotree
+(use-package neotree
   :ensure t
+  :bind (([f2] . neotree-toggle)))
+
+;; doom-themes
+;; manual run all-the-icons-install-fonts
+(use-package doom-themes
+  :ensure t
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
   :config
-  (load-theme 'solarized-dark t))
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config)
+  (doom-themes-neotree-config)
+  (load-theme 'doom-one t))
+
+;; doom-modeline
+(use-package doom-modeline
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 ;; which-key
 (use-package which-key
@@ -783,142 +801,6 @@
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
-
-;; modeline
-(defun mode-line-fill (face reserve)
-  "Return empty space using FACE and leaving RESERVE space on the right."
-  (unless reserve
-    (setq reserve 20))
-  (when (and window-system (eq 'right (get-scroll-bar-mode)))
-    (setq reserve (- reserve 3)))
-  (propertize " "
-	      'display `((space :align-to
-				(- (+ right right-fringe right-margin) ,reserve)))
-	      'face face))
-
-(defun buffer-encoding-abbrev ()
-  "The line ending convention used in the buffer."
-  (let ((buf-coding (format "%s" buffer-file-coding-system)))
-    (if (string-match "\\(dos\\|unix\\|mac\\)" buf-coding)
-	(match-string 1 buf-coding)
-      buf-coding)))
-
-(defun spaceline--unicode-number (str)
-  "Return a nice unicode representation of a single-digit number STR."
-  (cond
-   ((string= "1" str) "➊")
-   ((string= "2" str) "➋")
-   ((string= "3" str) "➌")
-   ((string= "4" str) "➍")
-   ((string= "5" str) "➎")
-   ((string= "6" str) "➏")
-   ((string= "7" str) "➐")
-   ((string= "8" str) "➑")
-   ((string= "9" str) "➒")
-   ((string= "0" str) "➓")))
-
-(defun window-number-mode-line ()
-  "The current window number. Requires `window-numbering-mode' to be enabled."
-  (when (bound-and-true-p window-numbering-mode)
-    (let* ((num (window-numbering-get-number))
-	   (str (when num (int-to-string num))))
-      (spaceline--unicode-number str))))
-
-(setq-default my-flycheck-mode-line
-	      '(:eval
-		(pcase flycheck-last-status-change
-		  (`not-checked nil)
-		  (`no-checker (propertize " -" 'face 'warning))
-		  (`running (propertize " ✷" 'face 'success))
-		  (`errored (propertize " !" 'face 'error))
-		  (`finished
-		   (let* ((error-counts (flycheck-count-errors flycheck-current-errors))
-			  (no-errors (cdr (assq 'error error-counts)))
-			  (no-warnings (cdr (assq 'warning error-counts)))
-			  (face (cond (no-errors 'error)
-				      (no-warnings 'warning)
-				      (t 'success))))
-		     (propertize (format "[%s/%s]" (or no-errors 0) (or no-warnings 0))
-				 'face face)))
-		  (`interrupted " -")
-		  (`suspicious '(propertize " ?" 'face 'warning)))))
-
-(setq-default mode-line-format
-	      (list
-	       " %1"
-	       '(:eval (propertize
-			(window-number-mode-line)
-			'face
-			'font-lock-type-face))
-	       "%1 "
-	       ;; the buffer name; the file name as a tool tip
-	       '(:eval (propertize "%b " 'face 'font-lock-keyword-face
-				   'help-echo (buffer-file-name)))
-	       
-	       " [" ;; insert vs overwrite mode, input-method in a tooltip
-	       '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-				   'face 'font-lock-preprocessor-face
-				   'help-echo (concat "Buffer is in "
-						      (if overwrite-mode
-							  "overwrite"
-							"insert") " mode")))
-
-	       ;; was this buffer modified since the last save?
-	       '(:eval (when (buffer-modified-p)
-			 (concat ","  (propertize "Mod"
-						  'face 'font-lock-warning-face
-						  'help-echo "Buffer has been modified"))))
-
-	       ;; is this buffer read-only?
-	       '(:eval (when buffer-read-only
-			 (concat ","  (propertize "RO"
-						  'face 'font-lock-type-face
-						  'help-echo "Buffer is read-only"))))
-	       "] "
-
-	       ;; relative position, size of file
-	       "["
-	       (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
-	       "/"
-	       (propertize "%I" 'face 'font-lock-constant-face) ;; size
-	       "] "
-
-	       ;; the current major mode for the buffer.
-	       '(:eval (propertize "%m" 'face 'font-lock-string-face
-				   'help-echo buffer-file-coding-system))
-
-	       "%1 "
-	       my-flycheck-mode-line
-	       "%1 "
-
-	       ;; minor modes but I feel that's too many
-	       ;; minor-mode-alist
-	       
-	       " "
-	       ;; git info
-	       `(vc-mode vc-mode)
-
-	       " "
-	       
-	       ;; global-mode-string goes in mode-line-misc-info
-	       mode-line-misc-info
-
-	       (mode-line-fill 'mode-line 20)
-
-	       ;; line and column
-	       "("
-	       (propertize "%02l" 'face 'font-lock-type-face) ","
-	       (propertize "%02c" 'face 'font-lock-type-face)
-	       ") "
-
-	       '(:eval (buffer-encoding-abbrev))
-	       mode-line-end-spaces " "
-	       ;; add the time, with the date and the emacs uptime in the tooltip
-	       '(:eval (propertize (format-time-string "%H:%M")
-				   'help-echo
-				   (concat (format-time-string "%c; ")
-					   (emacs-uptime "Uptime:%hh"))))))
-;; end modeline
 
 (provide 'init)
 ;;; init.el ends here
