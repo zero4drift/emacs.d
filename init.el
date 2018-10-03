@@ -625,29 +625,23 @@
   (ivy-use-virtual-buffers t)
   (enable-recursive-minibuffers t))
 
-;; neotree
-(use-package neotree
+;; solarized-theme
+(use-package solarized-theme
   :ensure t
-  :bind (([f2] . neotree-toggle)))
-
-;; doom-themes
-;; manual run all-the-icons-install-fonts
-(use-package doom-themes
-  :ensure t
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
   :config
-  (doom-themes-visual-bell-config)
-  (doom-themes-org-config)
-  (doom-themes-neotree-config)
-  (load-theme 'doom-one t))
+  (load-theme 'solarized-dark t))
 
 ;; doom-modeline
+;; manual run all-the-icons-install-fonts
 (use-package doom-modeline
   :ensure t
   :defer t
   :hook (after-init . doom-modeline-init))
+
+;; neotree
+(use-package neotree
+  :ensure t
+  :bind (([f2] . neotree-toggle)))
 
 ;; which-key
 (use-package which-key
