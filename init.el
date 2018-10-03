@@ -628,6 +628,8 @@
 ;; solarized-theme
 (use-package solarized-theme
   :ensure t
+  :custom
+  (x-underline-at-descent-line t)
   :config
   (load-theme 'solarized-dark t))
 
