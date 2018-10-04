@@ -778,19 +778,15 @@
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
   :ensure t
-  :bind
-  (("M-;" . 'evilnc-comment-or-uncomment-lines)
-   ("C-c l" . 'evilnc-quick-comment-or-uncomment-to-the-line)
-   ("C-c c" . 'evilnc-copy-and-comment-lines)
-   ("C-c p" . 'evilnc-comment-or-uncomment-paragraphs)))
+  :defer t)
 
 ;; begin evil conf
 ;; evil-leader
 (use-package evil-leader
-  :after (winum)
   :ensure t
+  :hook
+  (evil-local-mode . evil-leader-mode)
   :config
-  (global-evil-leader-mode)
   (evil-leader/set-key
     "ff" 'find-file
     "bb" 'switch-to-buffer
