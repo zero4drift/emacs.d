@@ -647,6 +647,11 @@
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  (with-eval-after-load "treemacs"
+    (treemacs-map-icons-with-auto-mode-alist
+     '(".h")
+     '((c-mode . treemacs-icon-c)
+       (c++-mode . treemacs-icon-cpp))))
   :config
   (progn
     (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
@@ -659,7 +664,7 @@
           treemacs-goto-tag-strategy          'refetch-index
           treemacs-indentation                2
           treemacs-indentation-string         " "
-          treemacs-is-never-other-window      nil
+          treemacs-is-never-other-window      t
           treemacs-no-png-images              nil
           treemacs-project-follow-cleanup     nil
           treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
@@ -676,8 +681,8 @@
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
+    (treemacs-resize-icons 44)
+    
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
@@ -689,9 +694,7 @@
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-        ("M-0"       . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
