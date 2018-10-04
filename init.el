@@ -640,13 +640,19 @@
   :defer t
   :hook (after-init . doom-modeline-init))
 
+;; ace-window
+(use-package ace-window
+  :ensure t
+  :defer t
+  :custom
+  (aw-background nil)
+  :bind (("C-x o" . ace-window)))
+
 ;; treemacs
 (use-package treemacs
   :ensure t
   :defer t
   :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   (with-eval-after-load "treemacs"
     (treemacs-map-icons-with-auto-mode-alist
      '(".h")
@@ -694,6 +700,7 @@
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
+	("M-o"       . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
@@ -768,11 +775,6 @@
   (("M-j" . pyim-convert-code-at-point) ;与 pyim-probe-dynamic-english 配合
    ("C-." . pyim-delete-word-from-personal-buffer)))
 
-;; winum
-(use-package winum
-  :ensure t
-  :config (winum-mode 1))
-
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
   :ensure t
@@ -792,18 +794,10 @@
   (evil-leader/set-key
     "ff" 'find-file
     "bb" 'switch-to-buffer
-    "0"  'select-window-0
-    "1"  'select-window-1
-    "2"  'select-window-2
-    "3"  'select-window-3
-    "w/" 'split-window-right
-    "w-" 'split-window-below
     ":"  'counsel-M-x
-    "wM" 'delete-other-windows
     ;; evil-nerd-commenter
     "ci" 'evilnc-comment-or-uncomment-lines
     "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
     "cc" 'evilnc-copy-and-comment-lines
     "cp" 'evilnc-comment-or-uncomment-paragraphs
     "cr" 'comment-or-uncomment-region
