@@ -759,14 +759,22 @@
 ;; evil-surround
 (use-package evil-surround
   :ensure t
-  :config (global-evil-surround-mode))
+  :hook
+  (evil-local-mode . turn-on-evil-surround-mode)
+  (c++-mode .
+	    (lambda ()
+	      (push '(?< . ("<" . ">"))
+		    evil-surround-pairs-alist)))
+  (emacs-lisp-mode .
+		   (lambda ()
+                     (push '(?` . ("`" . "'"))
+			   evil-surround-pairs-alist))))
 
 ;; evil-mode
 (use-package evil
   :ensure t
   :bind
   (([f5] . evil-local-mode))
-
   :hook ((prog-mode fundamental-mode text-mode)
 	 . evil-local-mode))
 ;; end evil confs
