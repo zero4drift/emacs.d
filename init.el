@@ -764,9 +764,12 @@
 ;; evil-mode
 (use-package evil
   :ensure t
-  :config (evil-mode 1))
+  :bind
+  (([f5] . evil-local-mode))
+
+  :hook ((prog-mode fundamental-mode text-mode)
+	 . evil-local-mode))
 ;; end evil confs
-;; end use-packages
 
 ;; youdao-dictionary
 (use-package youdao-dictionary
@@ -798,6 +801,8 @@
   (set-face-background 'line-number-current-line "#859900")
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
+
+;; end use-packages
 
 
 (provide 'init)
