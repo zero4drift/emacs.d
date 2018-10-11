@@ -570,7 +570,7 @@
   :ensure t
   :defer t)
 
-(defhydra hydra-smartparens (global-map "M-p" :hint t)
+(defhydra hydra-smartparens (global-map "M-p s" :hint t)
   "
 Sexps (quit with _q_, help with _h_)
 ^Nav^            ^Barf/Slurp^                 ^Depth^
