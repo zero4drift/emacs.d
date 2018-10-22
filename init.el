@@ -655,6 +655,8 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (use-package doom-modeline
   :ensure t
   :defer t
+  :custom
+  (doom-modeline-buffer-file-name-style "relative-from-project")
   :hook (after-init . doom-modeline-init))
 
 ;; ace-window
