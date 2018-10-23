@@ -656,7 +656,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :ensure t
   :defer t
   :custom
-  (doom-modeline-buffer-file-name-style "relative-from-project")
+  (doom-modeline-buffer-file-name-style 'truncate-upto-root)
   :hook (after-init . doom-modeline-init))
 
 ;; ace-window
