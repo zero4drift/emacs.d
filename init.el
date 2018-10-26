@@ -515,12 +515,23 @@
   :ensure t
   :custom
   (company-quickhelp-delay 1)
+  (company-lsp-enable-snippet t)
   (company-lsp-async t)
   (company-lsp-cache-candidates nil)
   (company-lsp-enable-recompletion t)
   :config
   (push 'company-lsp company-backends))
 ;; ends cquery
+
+;; yasnippet
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :config
+  (yas-reload-all)
+  :hook
+  (prog-mode . yas-minor-mode)
+  )
 
 ;; flycheck
 (use-package flycheck
