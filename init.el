@@ -886,6 +886,19 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
+;; awesome-tab, many thanks to manateelazycat!
+(use-package awesome-tab
+  :defer t
+  :load-path "elisp/awesome-tab"
+  :init
+  (require 'awesome-tab)
+  (custom-set-faces
+   '(awesome-tab-selected ((t (:inherit awesome-tab-default :foreground "#859900" :overline "#2aa198" :weight ultra-bold :width semi-expanded))))
+   '(awesome-tab-unselected ((t (:inherit awesome-tab-default :foreground "dark grey" :overline "dark green"))))
+   '(awesome-tab-default ((t (:height 1.1)))))
+  :config
+  (awesome-tab-mode t))
+
 ;; end use-packages
 
 
