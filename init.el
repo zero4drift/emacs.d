@@ -896,6 +896,37 @@ _k_: kill        _s_: split                   _{_: wrap with { }
    '(awesome-tab-selected ((t (:inherit awesome-tab-default :foreground "#859900" :overline "#2aa198" :weight ultra-bold :width semi-expanded))))
    '(awesome-tab-unselected ((t (:inherit awesome-tab-default :foreground "dark grey"))))
    '(awesome-tab-default ((t (:height 1.1)))))
+  ;; my tab buffer groups function
+  (defun zero4drift-tab-buffer-groups ()
+    (list
+     (cond
+      ((or (string-equal "*" (substring (buffer-name) 0 1))
+           (memq major-mode '(magit-process-mode
+                              magit-status-mode
+                              magit-diff-mode
+                              magit-log-mode
+                              magit-file-mode
+                              magit-blob-mode
+                              magit-blame-mode
+                              )))
+       "Emacs")
+      ((derived-mode-p 'ledger-mode)
+       "Ledger")
+      ((derived-mode-p 'eshell-mode)
+       "EShell")
+      ((derived-mode-p 'emacs-lisp-mode)
+       "Elisp")
+      ((derived-mode-p 'dired-mode)
+       "Dired")
+      ((memq major-mode '(org-mode org-agenda-mode diary-mode))
+       "OrgMode")
+      (t
+       (if (awesome-tab-in-project-p)
+           (awesome-tab-get-group-name (current-buffer))
+	 "Common"))
+      )))
+  :custom
+  (awesome-tab-buffer-groups-function 'zero4drift-tab-buffer-groups)
   :config
   (awesome-tab-mode t))
 
