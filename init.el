@@ -525,13 +525,11 @@
 
 ;; yasnippet
 (use-package yasnippet-snippets
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package yasnippet
   :after (yasnippet-snippets)
   :ensure t
-  :defer t
   :config
   (yas-global-mode t))
 
