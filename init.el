@@ -500,7 +500,7 @@
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (use-package lsp-ui
-  :after evil
+  :after (evil)
   :ensure t
   :hook
   (lsp-mode . lsp-ui-mode)
@@ -524,14 +524,16 @@
 ;; ends cquery
 
 ;; yasnippet
+(use-package yasnippet-snippets
+  :ensure t
+  :defer t)
+
 (use-package yasnippet
+  :after (yasnippet-snippets)
   :ensure t
   :defer t
   :config
-  (yas-reload-all)
-  :hook
-  (prog-mode . yas-minor-mode)
-  )
+  (yas-global-mode t))
 
 ;; flycheck
 (use-package flycheck
