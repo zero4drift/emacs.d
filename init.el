@@ -123,21 +123,6 @@
 ;; shortcut to format buffer or selected region
 (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
-;; hippie-expand enhanced
-(setq hippie-expand-try-functions-list '(try-expand-dabbrev
-					 try-expand-dabbrev-all-buffers
-					 try-expand-dabbrev-from-kill
-					 try-complete-file-name-partially
-					 try-complete-file-name
-					 try-expand-all-abbrevs
-					 try-expand-list
-					 try-expand-line
-					 try-complete-lisp-symbol-partially
-					 try-complete-lisp-symbol))
-
-;; shortcut to auto complete when company not triggered
-(global-set-key (kbd "C-c /") 'hippie-expand)
-
 
 ;; files, folders, buffers and text
 ;; dired
@@ -187,12 +172,6 @@
 ;; typed text replaces the selection
 (delete-selection-mode t)
 
-;; associate e-lisp-mode with abbrev-mode, define an abbrev
-(add-hook 'emacs-lisp-mode-hook (lambda () (abbrev-mode t)))
-(define-abbrev-table 'global-abbrev-table '(
-					    ;; signature
-					    ("z4d" "zero4drift")
-					    ))
 ;; end functions and related keybindings
 
 
@@ -528,8 +507,10 @@
   :ensure t)
 
 (use-package yasnippet
-  :after (yasnippet-snippets)
+  :after (company yasnippet-snippets)
   :ensure t
+  :bind
+  (("C-c /" . company-yasnippet))
   :config
   (yas-global-mode t))
 
@@ -737,7 +718,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-projectile
-  :after treemacs projectile
+  :after (treemacs projectile)
   :ensure t)
 
 ;; which-key
@@ -858,7 +839,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 ;; youdao-dictionary
 (use-package youdao-dictionary
   :ensure t
-  :after popwin
+  :after (popwin)
   :config
   (push "*Youdao Dictionary*" popwin:special-display-config)
   :custom
