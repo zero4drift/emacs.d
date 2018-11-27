@@ -717,12 +717,12 @@ _k_: kill        _s_: split                   _{_: wrap with { }
     (pcase (cons (not (null (executable-find "git")))
                  (not (null (executable-find "python3"))))
       (`(t . t)
-       (treemacs-git-mode 'extended))
+       (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-	("M-o"       . treemacs-select-window)
+	("C-x t t"   . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
