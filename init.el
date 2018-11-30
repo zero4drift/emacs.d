@@ -547,7 +547,7 @@
     (find-file "~/.accounting/2018.ledger"))
   :ensure t
   :mode "\\.ledger$"
-  :bind (([f3] . open-ledger)))
+  :bind (([f5] . open-ledger)))
 
 ;; magit
 (use-package magit
@@ -722,7 +722,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-	("[f5]" . treemacs-select-window)
+	([f3] . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
