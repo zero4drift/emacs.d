@@ -722,7 +722,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-	("C-x t t"   . treemacs-select-window)
+	("[f5]" . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
