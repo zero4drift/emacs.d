@@ -106,7 +106,7 @@
 (defun open-init()
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
-(global-set-key (kbd "<f2>") 'open-init)
+(global-set-key (kbd "<f4>") 'open-init)
 
 ;; shortcut to find function, variable
 (global-set-key (kbd "C-h C-f") 'find-function)
@@ -547,7 +547,7 @@
     (find-file "~/.accounting/2018.ledger"))
   :ensure t
   :mode "\\.ledger$"
-  :bind (([f5] . open-ledger)))
+  :bind (([f3] . open-ledger)))
 
 ;; magit
 (use-package magit
@@ -722,7 +722,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-	([f3] . treemacs-select-window)
+	([f2] . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
@@ -842,7 +842,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (use-package evil
   :ensure t
   :bind
-  (([f4] . evil-local-mode))
+  (([f5] . evil-local-mode))
   :hook ((prog-mode fundamental-mode text-mode)
 	 . evil-local-mode))
 ;; end evil confs
