@@ -648,8 +648,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 ;; solarized-theme
 (use-package solarized-theme
   :ensure t
-  :custom
-  (x-underline-at-descent-line t)
   :config
   (load-theme 'solarized-dark t))
 
@@ -658,7 +656,12 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (use-package doom-modeline
   :ensure t
   :defer t
+  :config
+  (set-face-attribute 'mode-line nil
+		      :underline
+		      (face-background 'highlight))
   :custom
+  (x-underline-at-descent-line t)
   (doom-modeline-buffer-file-name-style 'truncate-upto-root)
   :hook (after-init . doom-modeline-init))
 
