@@ -871,14 +871,11 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 ;; youdao-dictionary
 (use-package youdao-dictionary
   :ensure t
-  :after (popwin)
-  :config
-  (push "*Youdao Dictionary*" popwin:special-display-config)
   :custom
   (url-automatic-caching t)
   (youdao-dictionary-search-histroy-file "~/.emacs.d/.youdao")
   :bind
-  (("C-c y" . 'youdao-dictionary-search-at-point)))
+  (("C-c y" . 'youdao-dictionary-search-at-point+)))
 
 ;; mail-agent wanderlust
 (use-package wanderlust
