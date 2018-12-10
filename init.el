@@ -27,12 +27,13 @@
 	  t)
 
 ;; quelpa
-(if (require 'quelpa nil t)
-    (quelpa-self-upgrade)
+(unless (require 'quelpa nil t)
   (with-temp-buffer
     (url-insert-file-contents
      "https://framagit.org/steckerhalter/quelpa/raw/master/bootstrap.el")
     (eval-buffer)))
+;; using quelpa mainly for installing packages outside of MELPA
+(setq quelpa-checkout-melpa-p nil)
 
 ;; quelpa-use-package
 (quelpa
@@ -901,10 +902,11 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; awesome-tab, many thanks to manateelazycat!
 (use-package awesome-tab
-  :defer t
-  :load-path "elisp/awesome-tab"
+  :quelpa
+  ((awesome-tab
+    :fetcher github
+    :repo "manateelazycat/awesome-tab"))
   :init
-  (require 'awesome-tab)
   (custom-set-faces
    '(awesome-tab-selected ((t
 			    (:inherit awesome-tab-default
