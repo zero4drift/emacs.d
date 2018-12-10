@@ -46,6 +46,7 @@
 ;; use-package
 (eval-when-compile
   (require 'use-package))
+(setq use-package-always-ensure t)
 
 ;; custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -407,7 +408,6 @@
 ;; Stage 4: Doing
 ;; org-pomodoro
 (use-package org-pomodoro
-  :ensure t
   :bind
   (:map org-agenda-mode-map
 	(("I" . org-pomodoro)))
@@ -417,7 +417,6 @@
 
 ;; deft
 (use-package deft
-  :ensure t
   :bind
   (("C-c n" . deft))
   :config
@@ -435,7 +434,6 @@
 
 ;; iedit
 (use-package iedit
-  :ensure t
   :bind
   (("C-:" . iedit-mode)))
 
@@ -447,7 +445,6 @@
 
 ;; company
 (use-package company
-  :ensure t
   :custom
   (company-idle-delay 1)
   (company-show-numbers t)
@@ -466,7 +463,6 @@
 ;; ;; ycmd
 ;; (use-package ycmd
 ;;   :if (not (eq system-type 'windows-nt))
-;;   :ensure t
 ;;   :custom
 ;;   (ycmd-extra-conf-whitelist '("~/github/*"))
 ;;   (ycmd-startup-timeout 5)
@@ -476,13 +472,11 @@
 ;; ;; comany-ycmd
 ;; (use-package company-ycmd
 ;;   :if (not (eq system-type 'windows-nt))
-;;   :ensure t
 ;;   :hook (ycmd-mode . company-ycmd-setup))
 
 ;; ;; flycheck-ycmd
 ;; (use-package flycheck-ycmd
 ;;   :if (not (eq system-type 'windows-nt))
-;;   :ensure t
 ;;   :hook (ycmd-mode . flycheck-ycmd-setup))
 
 ;; C++-mode
@@ -490,7 +484,6 @@
 
 ;; cquery
 (use-package cquery
-  :ensure t
   :init
   (setq cquery-executable "/home/fang/github/cquery/build/release/bin/cquery")
   (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
@@ -503,13 +496,11 @@
      (lsp-cquery-enable))))
 
 (use-package ivy-xref
-  :ensure t
   :init
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (use-package lsp-ui
   :after (evil)
-  :ensure t
   :hook
   (lsp-mode . lsp-ui-mode)
   :config
@@ -520,7 +511,6 @@
 
 (use-package company-lsp
   :defer t
-  :ensure t
   :custom
   (company-quickhelp-delay 1)
   (company-lsp-enable-snippet t)
@@ -532,12 +522,10 @@
 ;; ends cquery
 
 ;; yasnippet
-(use-package yasnippet-snippets
-  :ensure t)
+(use-package yasnippet-snippets)
 
 (use-package yasnippet
   :after (company yasnippet-snippets)
-  :ensure t
   :bind
   (("C-c /" . company-yasnippet))
   :config
@@ -545,7 +533,6 @@
 
 ;; flycheck
 (use-package flycheck
-  :ensure t
   :custom
   (flycheck-clang-args "-std=c++11")
   :hook
@@ -553,7 +540,6 @@
 
 ;; hungry-delete
 (use-package hungry-delete
-  :ensure t
   :config
   (global-hungry-delete-mode))
 
@@ -563,19 +549,16 @@
   (defun open-ledger()
     (interactive)
     (find-file "~/.accounting/2018.ledger"))
-  :ensure t
   :mode "\\.ledger$"
   :bind (([f3] . open-ledger)))
 
 ;; magit
 (use-package magit
-  :ensure t
   :bind
   (("C-x g" . magit-status)))
 
 ;; popwin
 (use-package popwin
-  :ensure t
   :config (popwin-mode 1))
 
 ;; smartparens
@@ -588,7 +571,6 @@
 
 ;; hydra
 (use-package hydra
-  :ensure t
   :defer t)
 
 (defhydra hydra-smartparens (global-map "M-p s" :hint t)
@@ -644,13 +626,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   ("C-<right>" sp-backward-slurp-sexp))
 
 ;; counsel
-(use-package counsel
-  :ensure t)
-
+(use-package counsel)
 ;; swiper
 (use-package swiper
   :after (counsel)
-  :ensure t
   :config
   (ivy-mode 1)
   (counsel-mode 1)
@@ -665,14 +644,12 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; solarized-theme
 (use-package solarized-theme
-  :ensure t
   :config
   (load-theme 'solarized-dark t))
 
 ;; doom-modeline
 ;; manual run all-the-icons-install-fonts
 (use-package doom-modeline
-  :ensure t
   :defer t
   :config
   (set-face-attribute 'mode-line nil
@@ -685,7 +662,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; ace-window
 (use-package ace-window
-  :ensure t
   :defer t
   :custom
   (aw-background nil)
@@ -693,7 +669,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; treemacs
 (use-package treemacs
-  :ensure t
   :defer t
   :init
   (with-eval-after-load "treemacs"
@@ -750,12 +725,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
+  :after (treemacs projectile))
 
 ;; which-key
 (use-package which-key
-  :ensure t
   :init
   (which-key-mode)
   :config
@@ -764,7 +737,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 ;; pyim Chinese input method
 (use-package pyim
   :after (ivy)
-  :ensure t
   :demand t
   :config
   ;; 让swiper 支持 pyim
@@ -777,7 +749,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 	'((t . eh-ivy-cregexp)))
   ;; 激活 basedict 拼音词库
   (use-package pyim-basedict
-    :ensure t
     :config (pyim-basedict-enable))
 
   (setq default-input-method "pyim")
@@ -820,13 +791,11 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :ensure t
   :defer t)
 
 ;; begin evil conf
 ;; evil-leader
 (use-package evil-leader
-  :ensure t
   :hook
   (evil-local-mode . evil-leader-mode)
   :config
@@ -847,7 +816,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; evil-surround
 (use-package evil-surround
-  :ensure t
   :hook
   (evil-local-mode . turn-on-evil-surround-mode)
   (c++-mode .
@@ -861,7 +829,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; evil-mode
 (use-package evil
-  :ensure t
   :bind
   (([f5] . evil-local-mode))
   :hook ((prog-mode fundamental-mode text-mode)
@@ -870,7 +837,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; youdao-dictionary
 (use-package youdao-dictionary
-  :ensure t
   :custom
   (url-automatic-caching t)
   (youdao-dictionary-search-histroy-file "~/.emacs.d/.youdao")
@@ -879,7 +845,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; mail-agent wanderlust
 (use-package wanderlust
-  :ensure t
   :commands wl
   :init
   (require 'wl)
