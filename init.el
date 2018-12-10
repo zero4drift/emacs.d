@@ -26,6 +26,23 @@
 			,load-file-name elapsed)))
 	  t)
 
+;; quelpa
+(if (require 'quelpa nil t)
+    (quelpa-self-upgrade)
+  (with-temp-buffer
+    (url-insert-file-contents
+     "https://framagit.org/steckerhalter/quelpa/raw/master/bootstrap.el")
+    (eval-buffer)))
+
+;; quelpa-use-package
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url
+   "https://framagit.org/steckerhalter/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+
+;; use-package
 (eval-when-compile
   (require 'use-package))
 
