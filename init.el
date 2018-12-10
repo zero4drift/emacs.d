@@ -739,7 +739,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :after (ivy)
   :demand t
   :config
-  ;; 让swiper 支持 pyim
+  ;; 让swiper 支持 pyim, 搜索词加前缀 .
   (defun eh-ivy-cregexp(str)
     (if (string-match-p "^\\." str)
 	(pyim-cregexp-build(substring str 1))
