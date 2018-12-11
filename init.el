@@ -843,13 +843,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :bind
   (("C-c y" . 'youdao-dictionary-search-at-point+)))
 
-;; mail-agent wanderlust
-(use-package wanderlust
-  :commands wl
-  :init
-  (require 'wl)
-  (autoload 'wl "wl" "Wanderlust" t))
-
 ;; built-in display-line-mode
 (use-package display-line-numbers
   :custom
