@@ -491,12 +491,11 @@
   (setq cquery-executable "/home/fang/github/cquery/build/release/bin/cquery")
   (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
   :config
-  :commands lsp-cquery-enable
   :hook
   ((c-mode c++-mode) .
    (lambda ()
      (require 'company-lsp)
-     (lsp-cquery-enable))))
+     (lsp))))
 
 (use-package ivy-xref
   :init
