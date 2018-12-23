@@ -488,6 +488,10 @@
 ;; cquery
 (use-package cquery
   :init
+  (defun cquery//enable ()
+    (condition-case nil
+	(lsp)
+      (user-error nil)))
   (setq cquery-executable "/home/fang/github/cquery/build/release/bin/cquery")
   (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
   :config
@@ -495,7 +499,7 @@
   ((c-mode c++-mode) .
    (lambda ()
      (require 'company-lsp)
-     (lsp))))
+     (cquery//enable))))
 
 (use-package ivy-xref
   :init
