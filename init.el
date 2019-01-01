@@ -554,7 +554,7 @@
   :init
   (defun open-ledger()
     (interactive)
-    (find-file "~/.accounting/2018.ledger"))
+    (find-file "~/.accounting/2019.ledger"))
   :mode "\\.ledger$"
   :bind (([f3] . open-ledger)))
 
