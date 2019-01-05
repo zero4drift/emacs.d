@@ -17,7 +17,7 @@
 	  ("org" . "http://elpa.emacs-china.org/org/"))))
 
 ;; scheme: delete this after finishing review of SICP Exercises
-(setq scheme-program-name "tinyscheme")
+(setq scheme-program-name "scheme")
 
 ;; to estimate start-up time usage
 (defconst emacs-start-time (current-time))
