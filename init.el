@@ -442,7 +442,6 @@
 
 ;; expand-region
 (use-package expand-region
-  :ensure t
   :bind
   (("C-=". er/expand-region)))
 
@@ -697,6 +696,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 (use-package treemacs-projectile
   :after (treemacs projectile))
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :config (treemacs-icons-dired-mode))
 
 ;; which-key
 (use-package which-key
