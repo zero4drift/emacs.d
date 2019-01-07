@@ -463,49 +463,14 @@
 	("C-n" . #'company-select-next)
 	("C-p" . #'company-select-previous)))
 
-;; ;; ycmd
-;; (use-package ycmd
-;;   :if (not (eq system-type 'windows-nt))
-;;   :custom
-;;   (ycmd-extra-conf-whitelist '("~/github/*"))
-;;   (ycmd-startup-timeout 5)
-;;   :hook
-;;   ((c-mode c++-mode) . ycmd-mode))
-
-;; ;; comany-ycmd
-;; (use-package company-ycmd
-;;   :if (not (eq system-type 'windows-nt))
-;;   :hook (ycmd-mode . company-ycmd-setup))
-
-;; ;; flycheck-ycmd
-;; (use-package flycheck-ycmd
-;;   :if (not (eq system-type 'windows-nt))
-;;   :hook (ycmd-mode . flycheck-ycmd-setup))
-
-;; C++-mode
+;; begins ccls
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; cquery
-(use-package cquery
-  :init
-  (defun cquery//enable ()
-    (condition-case nil
-	(lsp)
-      (user-error nil)))
-  (setq cquery-executable "/home/fang/github/cquery/build/release/bin/cquery")
-  (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
-  :config
-  :hook
-  ((c-mode c++-mode) .
-   (lambda ()
-     (require 'company-lsp)
-     (cquery//enable))))
-
-(use-package ivy-xref
-  :init
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+(use-package lsp-mode
+  :commands lsp)
 
 (use-package lsp-ui
+  :commands lsp-ui-mode
   :after (evil)
   :hook
   (lsp-mode . lsp-ui-mode)
@@ -516,6 +481,7 @@
   (define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward))
 
 (use-package company-lsp
+  :commands company-lsp
   :defer t
   :custom
   (company-quickhelp-delay 1)
@@ -525,7 +491,14 @@
   (company-lsp-enable-recompletion t)
   :config
   (push 'company-lsp company-backends))
-;; ends cquery
+
+(use-package ccls
+  :custom
+  (ccls-executable "~/github/ccls/Release/ccls")
+  (ccls-args '("--log-file=/tmp/ccls.log"))
+  :hook ((c-mode c++-mode) .
+	 (lambda () (require 'ccls) (lsp))))
+;; ends ccls
 
 ;; yasnippet
 (use-package yasnippet-snippets)
