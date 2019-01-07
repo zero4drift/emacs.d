@@ -464,8 +464,6 @@
 	("C-p" . #'company-select-previous)))
 
 ;; begins ccls
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
 (use-package lsp-mode
   :commands lsp)
 
@@ -649,12 +647,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 ;; treemacs
 (use-package treemacs
   :defer t
-  :init
-  (with-eval-after-load "treemacs"
-    (treemacs-map-icons-with-auto-mode-alist
-     '(".h")
-     '((c-mode . treemacs-icon-c)
-       (c++-mode . treemacs-icon-cpp))))
   :config
   (progn
     (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
