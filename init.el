@@ -120,10 +120,6 @@
 ;; bindings for recentf
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
-;; bindings for dired
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
-
 ;; shortcut to open init.el
 (defun open-init()
   (interactive)
@@ -158,12 +154,6 @@
 
 
 ;; files, folders, buffers and text
-;; dired
-(setq-default dired-dwim-target t)
-(setq-default dired-recursive-copies 'always)
-(setq-default dired-recursive-deletes 'always)
-(put 'dired-find-alternate-file 'disabled nil)
-
 ;; use fundamental-mode to open large files
 (defun zero4drift-check-large-file ()
   (when (> (buffer-size) 500000)
@@ -697,10 +687,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-(use-package treemacs-icons-dired
-  :after treemacs dired
-  :config (treemacs-icons-dired-mode))
-
 ;; which-key
 (use-package which-key
   :init
@@ -881,6 +867,22 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :config
   (awesome-tab-mode t))
 
+;; dired+ make dired human-friendly
+;; built-in dired
+(setq dired-listing-switches "-alh")
+(setq dired-dwim-target t)
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'top)
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+(define-key dired-mode-map (kbd "^")
+  (lambda () (interactive) (find-alternate-file "..")))
+(put 'dired-find-alternate-file 'disabled nil)
+;; dired+
+(use-package dired+
+  :quelpa
+  ((dired+
+    :fetcher github
+    :repo "emacsmirror/dired-plus")))
 ;; end use-packages
 
 
