@@ -879,13 +879,45 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   ((dired+
     :fetcher github
     :repo "emacsmirror/dired-plus")))
+;; open file in external apps, thanks to Xah Lee!
+(defun xah-open-in-external-app ()
+  "Open the current file or dired marked files in external app.
+  The app is chosen from your OS's preference.
+  URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
+  Version 2016-10-15"
+  (interactive)
+  (let* (
+         ($file-list
+          (if (string-equal major-mode "dired-mode")
+              (dired-get-marked-files)
+	    (list (buffer-file-name))))
+         ($do-it-p (if (<= (length $file-list) 5)
+                       t
+                     (y-or-n-p "Open more than 5 files? "))))
+    (when $do-it-p
+      (cond
+       ((string-equal system-type "windows-nt")
+        (mapc
+         (lambda ($fpath)
+           (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" $fpath t t))) $file-list))
+       ((string-equal system-type "darwin")
+        (mapc
+         (lambda ($fpath)
+           (shell-command
+            (concat "open " (shell-quote-argument $fpath))))  $file-list))
+       ((string-equal system-type "gnu/linux")
+        (mapc
+         (lambda ($fpath) (let ((process-connection-type nil))
+                       (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 ;; two customized shortcuts placed after dired+
 (put 'dired-find-alternate-file 'disabled nil)
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "RET")
     'dired-find-alternate-file)
   (define-key dired-mode-map (kbd "^")
-    (lambda () (interactive) (find-alternate-file ".."))))
+    (lambda () (interactive) (find-alternate-file "..")))
+  (define-key dired-mode-map (kbd "*o")
+    'xah-open-in-external-app))
 ;; end use-packages
 
 
