@@ -873,16 +873,19 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (setq dired-dwim-target t)
 (setq dired-recursive-copies 'always)
 (setq dired-recursive-deletes 'top)
-(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-(define-key dired-mode-map (kbd "^")
-  (lambda () (interactive) (find-alternate-file "..")))
-(put 'dired-find-alternate-file 'disabled nil)
 ;; dired+
 (use-package dired+
   :quelpa
   ((dired+
     :fetcher github
     :repo "emacsmirror/dired-plus")))
+;; two customized shortcuts placed after dired+
+(put 'dired-find-alternate-file 'disabled nil)
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET")
+    'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "^")
+    (lambda () (interactive) (find-alternate-file ".."))))
 ;; end use-packages
 
 
