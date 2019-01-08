@@ -698,6 +698,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 (use-package pyim
   :after (ivy)
   :demand t
+  :custom
+  (pyim-dicts
+   '((:name "CS" :file "~/.emacs.d/pyim/cs.pyim")
+     (:name "BigDict" :file "~/.emacs.d/pyim/pyim-bigdict.pyim")))
   :config
   ;; 让swiper 支持 pyim, 搜索词加前缀 .
   (defun eh-ivy-cregexp(str)
@@ -707,9 +711,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
   (setq ivy-re-builders-alist
 	'((t . eh-ivy-cregexp)))
-  ;; 激活 basedict 拼音词库
-  (use-package pyim-basedict
-    :config (pyim-basedict-enable))
 
   (setq default-input-method "pyim")
 
@@ -737,7 +738,8 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   ;; 使用 pupup-el 来绘制选词框, 如果用 emacs26, 建议设置
   ;; 为 'posframe, 速度很快并且菜单不会变形，不过需要用户
   ;; 手动安装 posframe 包。
-  (setq pyim-page-tooltip 'popup)
+  (use-package posframe)
+  (setq pyim-page-tooltip 'posframe)
 
   ;; 选词框显示5个候选词
   (setq pyim-page-length 5)
@@ -746,8 +748,8 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   (add-hook 'emacs-startup-hook
 	    #'(lambda () (pyim-restart-1 t)))
   :bind
-  (("M-j" . pyim-convert-code-at-point) ;与 pyim-probe-dynamic-english 配合
-   ("C-." . pyim-delete-word-from-personal-buffer)))
+  (;与 pyim-probe-dynamic-english 配合
+   ("M-j" . pyim-convert-code-at-point)))
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
