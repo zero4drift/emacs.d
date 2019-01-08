@@ -454,7 +454,9 @@
 
 ;; begins ccls
 (use-package lsp-mode
-  :commands lsp)
+  :commands lsp
+  :custom
+  (lsp-prefer-flymake nil))
 
 (use-package lsp-ui
   :commands lsp-ui-mode
@@ -499,8 +501,6 @@
 
 ;; flycheck
 (use-package flycheck
-  :custom
-  (flycheck-clang-args "-std=c++11")
   :hook
   (prog-mode . flycheck-mode))
 
