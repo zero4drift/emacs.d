@@ -455,7 +455,7 @@
 ;; begins ccls
 (use-package lsp-mode
   :commands lsp
-  :init
+  :config
   (set-face-attribute
    'lsp-face-highlight-read nil
    :underline (face-foreground 'warning))
