@@ -455,6 +455,16 @@
 ;; begins ccls
 (use-package lsp-mode
   :commands lsp
+  :init
+  (set-face-attribute
+   'lsp-face-highlight-read nil
+   :underline (face-foreground 'warning))
+  (set-face-attribute
+   'lsp-face-highlight-write nil
+   :underline (face-foreground 'error))
+  (set-face-attribute
+   'lsp-face-highlight-textual nil
+   :underline (face-foreground 'success))
   :custom
   (lsp-prefer-flymake nil))
 
