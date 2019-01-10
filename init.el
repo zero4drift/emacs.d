@@ -241,10 +241,7 @@
    ("C-c b" . org-iswitchb)
    :map org-mode-map
    ("M-n" . outline-next-visible-heading)
-   ("M-p" . outline-previous-visible-heading))
-  :config
-  (add-to-list 'org-structure-template-alist
-	       '("el" "#+BEGIN_SRCemacs-lisp :tangle yes?\n\n#+END_SRC")))
+   ("M-p" . outline-previous-visible-heading)))
 
 (require 'find-lisp)
 (setq zero4drift/org-agenda-directory "~/.org/gtd/")
