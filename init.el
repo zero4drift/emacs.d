@@ -979,6 +979,17 @@ _k_: kill        _s_: split                   _{_: wrap with { }
     (lambda () (interactive) (find-alternate-file "..")))
   (define-key dired-mode-map (kbd "*o")
     'xah-open-in-external-app))
+
+;; blog
+(use-package ox-hugo
+  :after ox
+  :custom
+  (org-hugo-section "post"))
+(use-package easy-hugo
+  :custom
+  (easy-hugo-basedir "~/github/blog/"))
+;; end blog
+
 ;; end use-packages
 
 
