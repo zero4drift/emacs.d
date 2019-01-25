@@ -760,7 +760,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :custom
   (pyim-dicts
    '((:name "CS" :file "~/.emacs.d/pyim/cs.pyim")
-     (:name "BigDict" :file "~/.emacs.d/pyim/pyim-bigdict.pyim")))
+     (:name "BigDict" :file "~/.emacs.d/pyim/pyim-bigdict.pyim.gz")))
   :config
   ;; 让swiper 支持 pyim, 搜索词加前缀 .
   (defun eh-ivy-cregexp(str)
