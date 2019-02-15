@@ -209,9 +209,7 @@
    'org-babel-load-languages '((emacs-lisp . t)
 			       (ledger . t)))
   (org-src-fontify-natively t)
-  ;; move org clock info into drawer
-  ;;(org-clock-into-drawer t)
-  ;; move org log info into drawer
+  (org-clock-into-drawer t)
   (org-log-into-drawer t)
   (org-log-done 'time)
   (org-log-state-notes-insert-after-drawers nil)
@@ -234,6 +232,24 @@
   (org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
      (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+  :custom-face
+  (org-done ((t (:strike-through t :weight bold))))
+  (org-headline-done ((t (:strike-through t))))
+  (org-image-actual-width (/ (display-pixel-width) 2))
+  :custom
+  (org-structure-template-alist '(("a" . "export ascii")
+                                  ("c" . "center")
+                                  ("C" . "comment")
+                                  ("e" . "example")
+                                  ("E" . "export")
+                                  ("h" . "export html")
+                                  ("l" . "export latex")
+                                  ("q" . "quote")
+                                  ("s" . "src")
+                                  ("v" . "verse")
+                                  ("el" . "src emacs-lisp ")
+                                  ("d" . "definition")
+                                  ("t" . "theorem")))
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
@@ -251,9 +267,11 @@
 (setq org-capture-templates `(("i" "inbox"
 			       entry (file "~/.org/gtd/inbox.org")
 			       "* TODO %?")
-			      ("e" "email"
-			       entry (file+headline "~/.org/gtd/projects.org" "Emails")
-			       "* TODO [#A] Reply:%a :@home:@school:" :immediate-finisht)
+			      ;; ("e" "email"
+			       ;; entry (file+headline "~/.org/gtd/emails.org" "Emails")
+			       ;; "* TODO [#A] Reply:%a :@home:@school:" :immediate-finish t)
+			      ("l" "link" entry (file "~/.org/gtd/inbox.org")
+			       "* TODO %(org-cliplink-capture)" :immediate-finish t)
 			      ("w" "Weekly Review"
 			       entry (file+olp+datetree "~/.org/gtd/reviews.org")
 			       (file "~/.org/gtd/templates/weekly_review.org"))
@@ -266,9 +284,11 @@
 (setq zero4drift/org-agenda-inbox-view
       `("i" "Inbox" todo ""
 	((org-agenda-files '("~/.org/gtd/inbox.org")))))
+(add-to-list 'org-agenda-custom-commands `,zero4drift/org-agenda-inbox-view)
 (setq zero4drift/org-agenda-someday-view
       `("s" "Someday" todo ""
 	((org-agenda-files '("~/.org/gtd/someday.org")))))
+(add-to-list 'org-agenda-custom-commands `,zero4drift/org-agenda-someday-view)
 
 (defun zero4drift/org-rename-item ()
   (interactive)
@@ -347,6 +367,9 @@
 	 (todo "TODO"
 	       ((org-agenda-overriding-header "To Refile")
 		(org-agenda-files '("~/.org/gtd/inbox.org"))))
+	 ;; (todo "TODO"
+               ;; ((org-agenda-overriding-header "Emails")
+                ;; (org-agenda-files '("~/.org/gtd/emails.org"))))
 	 (todo "NEXT"
 	       ((org-agenda-overriding-header "In Progress")
 		(org-agenda-files '("~/.org/gtd/someday.org"
@@ -355,11 +378,16 @@
 		;; (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))
 		))
 	 (todo "TODO"
-	       ((org-agenda-overriding-header "Todo")
-		(org-agenda-files '("~/.org/gtd/projects.org"
-				    "~/.org/gtd/next.org"))
-		(org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+	       ((org-agenda-overriding-header "Projects")
+		(org-agenda-files '("~/.org/gtd/projects.org"))))
+		;; (org-agenda-skip-function #'zero4drift/org-agenda-skip-all-siblings-but-first)))
+	 (todo "TODO"
+               ((org-agenda-overriding-header "One-off Tasks")
+                (org-agenda-files '("~/.org/gtd/next.org"))
+                (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
 	 nil)))
+
+(add-to-list 'org-agenda-custom-commands `,zero4drift/org-agenda-todo-view)
 
 (defun zero4drift/org-agenda-skip-all-siblings-but-first ()
   "Skip all but the first non-done entry."
@@ -390,14 +418,10 @@
   %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled)
   %DEADLINE(Deadline)")
 
-(setq org-agenda-custom-commands
-      `(,zero4drift/org-agenda-inbox-view
-	,zero4drift/org-agenda-someday-view
-	,zero4drift/org-agenda-todo-view))
-
 ;; Stage 4: Doing
 ;; org-pomodoro
 (use-package org-pomodoro
+  :after ofg
   :bind
   (:map org-agenda-mode-map
 	(("I" . org-pomodoro)))
