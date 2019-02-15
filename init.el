@@ -808,7 +808,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 	    #'(lambda () (pyim-restart-1 t)))
   :bind
   (;与 pyim-probe-dynamic-english 配合
-   ("M-j" . pyim-convert-code-at-point)))
+   ("M-j" . pyim-convert-string-at-point)))
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
