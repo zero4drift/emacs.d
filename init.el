@@ -227,6 +227,7 @@
   (org-refile-allow-creating-parent-nodes 'cofirm)
   (org-refile-targets '(("next.org" :level . 0)
 			("someday.org" :level . 0)
+			("reading.org" :level . 1)
 			("projects.org" :maxlevel . 1)))
   (org-return-follows-link t)
   (org-todo-keywords
@@ -289,34 +290,53 @@
       `("s" "Someday" todo ""
 	((org-agenda-files '("~/.org/gtd/someday.org")))))
 (add-to-list 'org-agenda-custom-commands `,zero4drift/org-agenda-someday-view)
+(setq zero4drift/org-agenda-reading-view
+      `("r" "Reading" todo ""
+        ((org-agenda-files '("~/.org/gtd/reading.org")))))
+(add-to-list 'org-agenda-custom-commands `,zero4drift/org-agenda-reading-view)
 
-(defun zero4drift/org-rename-item ()
+(defun zero4drift/org-process-inbox ()
+  "Called in org-agenda-mode, processes all inbox items."
   (interactive)
-  (save-excursion
-    (when (org-at-heading-p)
-      (let* ((hl-text (nth 4 (org-heading-components)))
-	     (new-header (read-string "New Text: " nil nil hl-text)))
-	(unless (or (null hl-text)
-		    (org-string-match-p "^[ \t]*:[^:]+:$" hl-text))
-	  (beginning-of-line)
-	  (search-forward hl-text (point-at-eol))
-	  (replace-string
-	   hl-text
-	   new-header
-	   nil (- (point) (length hl-text)) (point)))))))
+  (org-agenda-bulk-mark-regexp "inbox:")
+  (zero4drift/bulk-process-entries))
 
-(defun zero4drift/org-agenda-process-inbox-item (&optional goto rfloc no-update)
-  (interactive "P")
+(defun zero4drift/org-agenda-process-inbox-item ()
+  "Process a single item in the org-agenda."
   (org-with-wide-buffer
    (org-agenda-set-tags)
    (org-agenda-priority)
    (org-agenda-set-effort)
-   (org-agenda-refile nil nil t)
-   ;; (org-mark-ring-push)
-   ;; (org-refile-goto-last-stored)
-   ;; (zero4drift/org-rename-item)
-   ;; (org-mark-ring-goto)
-   (org-agenda-redo)))
+   (org-agenda-refile nil nil t)))
+
+(defun zero4drift/bulk-process-entries ()
+  (if (not (null org-agenda-bulk-marked-entries))
+      (let ((entries (reverse org-agenda-bulk-marked-entries))
+            (processed 0)
+            (skipped 0))
+        (dolist (e entries)
+          (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
+            (if (not pos)
+                (progn (message "Skipping removed entry at %s" e)
+                       (cl-incf skipped))
+              (goto-char pos)
+              (let (org-loop-over-headlines-in-active-region)
+		(funcall 'zero4drift/org-agenda-process-inbox-item))
+              ;; `post-command-hook' is not run yet.  We make sure any
+              ;; pending log note is processed.
+              (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
+                        (memq 'org-add-log-note post-command-hook))
+                (org-add-log-note))
+              (cl-incf processed))))
+        (org-agenda-redo)
+        (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
+        (message "Acted on %d entries%s%s"
+                 processed
+                 (if (= skipped 0)
+                     ""
+                   (format ", skipped %d (disappeared before their turn)"
+                           skipped))
+                 (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
 
 (defun zero4drift/org-inbox-capture ()
   "Capture a task in agenda mode."
@@ -324,7 +344,7 @@
   (org-capture nil "i"))
 
 (define-key org-agenda-mode-map "i" 'org-agenda-clock-in)
-(define-key org-agenda-mode-map "r" 'zero4drift/org-agenda-process-inbox-item)
+(define-key org-agenda-mode-map "r" 'zero4drift/org-process-inbox)
 (define-key org-agenda-mode-map "R" 'org-agenda-refile)
 (define-key org-agenda-mode-map "c" 'zero4drift/org-inbox-capture)
 
@@ -344,8 +364,7 @@
     (save-excursion
       (find-file (nth 1 parent-target))
       (goto-char (org-find-exact-headline-in-buffer child))
-      (org-add-note)
-      )
+      (org-add-note))
     res))
 
 (advice-add 'org-refile-new-child :around #'zero4drift/refile-new-child-advice)
