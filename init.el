@@ -929,16 +929,16 @@ _k_: kill        _s_: split                   _{_: wrap with { }
    `(awesome-tab-selected ((t
 			    (:inherit awesome-tab-default
 				      :foreground
-				      ,(face-foreground 'success)
-				      :overline
-				      ,(face-foreground 'dired-symlink)
-				      :weight ultra-bold
-				      :width semi-expanded))))
+  				      ,(face-foreground 'success)
+  				      :overline
+  				      ,(face-foreground 'dired-symlink)
+  				      :weight ultra-bold
+  				      :width semi-expanded))))
    `(awesome-tab-unselected ((t
 			      (:inherit awesome-tab-default
 					:foreground
-					,(face-foreground 'default)
-					:weight bold))))
+  					,(face-foreground 'default)
+  					:weight bold))))
    '(awesome-tab-default ((t (:height 1.1)))))
   ;; my tab buffer groups function
   (defun zero4drift-tab-buffer-groups ()
@@ -970,6 +970,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 	 "Common"))
       )))
   :custom
+  (awesome-tab-background-color (face-background 'default))
   (awesome-tab-buffer-groups-function 'zero4drift-tab-buffer-groups)
   :config
   (awesome-tab-mode t))
