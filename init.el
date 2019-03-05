@@ -478,11 +478,10 @@
 ;; company
 (use-package company
   :custom
-  (company-idle-delay 1)
+  (company-idle-delay 0.1)
   (company-show-numbers t)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
-  (company-clang-arguments "-std=c++11")
   :config
   (global-company-mode)
   :bind
