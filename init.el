@@ -973,6 +973,8 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   (awesome-tab-background-color (face-background 'default))
   (awesome-tab-buffer-groups-function 'zero4drift-tab-buffer-groups)
   :config
+  (require 'cl)
+  (require 'projectile)
   (awesome-tab-mode t))
 
 ;; dired+ make dired human-friendly
