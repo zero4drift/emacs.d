@@ -440,10 +440,10 @@
 ;; Stage 4: Doing
 ;; org-pomodoro
 (use-package org-pomodoro
-  :after ofg
+  :after org
   :bind
   (:map org-agenda-mode-map
-	(("I" . org-pomodoro)))
+	("I" . org-pomodoro))
   :custom
   (org-pomodoro-format "%s")
   (org-pomodoro-audio-player (executable-find "mpv")))
