@@ -923,7 +923,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :quelpa
   ((awesome-tab
     :fetcher github
-    :repo "manateelazycat/awesome-tab"))
+    :repo "zero4drift/awesome-tab"))
   :init
   (custom-set-faces
    `(awesome-tab-selected ((t
@@ -970,7 +970,7 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 	 "Common"))
       )))
   :custom
-  (awesome-tab-background-color (face-background 'default))
+  ;; (awesome-tab-background-color (face-background 'default))
   (awesome-tab-buffer-groups-function 'zero4drift-tab-buffer-groups)
   :config
   (require 'cl)
