@@ -904,7 +904,8 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   (url-automatic-caching t)
   (youdao-dictionary-search-histroy-file "~/.emacs.d/.youdao")
   :bind
-  (("C-c y" . 'youdao-dictionary-search-at-point+)))
+  (("C-c y" . 'youdao-dictionary-search-at-point+)
+   ("C-c p" . 'youdao-dictionary-play-voice-at-point)))
 
 ;; built-in display-line-mode
 (use-package display-line-numbers
