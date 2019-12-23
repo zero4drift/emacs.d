@@ -4,17 +4,14 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;; (package-initialize)
 
 
 ;; elpa
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (setq package-archives
-	'(("melpa" . "http://elpa.emacs-china.org/melpa/")
-	  ("gnu" . "http://elpa.emacs-china.org/gnu/")
-	  ("org" . "http://elpa.emacs-china.org/org/"))))
+(package-initialize)
+(setq package-archives
+      '(("melpa" . "http://elpa.emacs-china.org/melpa/")
+	("gnu" . "http://elpa.emacs-china.org/gnu/")
+	("org" . "http://elpa.emacs-china.org/org/")))
 
 ;; scheme: delete this after finishing review of SICP Exercises
 (setq scheme-program-name "scheme")
@@ -62,21 +59,25 @@
 			       (face-foreground 'error))
           (run-with-idle-timer 0.3 nil
                                (lambda (fg)
-				 (set-face-foreground 'mode-line fg))
-                               orig-fg))))
+				 (set-face-foreground 'mode-line
+						      fg)) orig-fg))))
+
 ;; https://blog.csdn.net/xh_acmagic/article/details/78939246
 (defun +my/better-font()
   (interactive)
   ;; english font
   (if (display-graphic-p)
       (progn
-        (set-face-attribute 'default nil :font (format   "%s:pixelsize=%d" "Inconsolata" 18)) ;; 11 13 17 19 23
+        (set-face-attribute 'default nil
+			    ;; 11 13 17 19 23
+			    :font (format "%s:pixelsize=%d" "Inconsolata"
+					  18))
         ;; chinese font
         (dolist (charset '(kana han symbol cjk-misc bopomofo))
-	  (set-fontset-font (frame-parameter nil 'font)
-                            charset
-                            (font-spec :family "Sarasa Mono SC")))) ;; 14 16 20 22 28
-    ))
+	  (set-fontset-font (frame-parameter nil 'font) charset
+			    ;; 14 16 20 22 28
+                            (font-spec :family "Sarasa Mono
+    SC"))))))
 
 (defun +my|init-font(frame)
   (with-selected-frame frame
@@ -86,6 +87,7 @@
 (if (and (fboundp 'daemonp) (daemonp))
     (add-hook 'after-make-frame-functions #'+my|init-font)
   (+my/better-font))
+
 ;; end ui
 
 
