@@ -87,7 +87,6 @@
 (if (and (fboundp 'daemonp) (daemonp))
     (add-hook 'after-make-frame-functions #'+my|init-font)
   (+my/better-font))
-
 ;; end ui
 
 
@@ -441,18 +440,14 @@
 ;; deft
 (use-package deft
   :bind
-  (("C-c n" . deft))
-  :config
-  ;; No deft summary
-  (defun deft-parse-summary (contents title))
+  (("C-c n" . deft) ("C-x C-g" . deft-find-file))
   :custom
   (deft-default-extension "org")
   (deft-directory "~/.org/deft/")
   (deft-recursive t)
-  (deft-file-naming-rules '((noslash . "_")))
   (deft-text-mode 'org-mode)
-  (deft-use-filter-string-for-filename t)
-  (deft-org-mode-title-prefix t)
+  (deft-use-filter-string-for-filename nil)
+  (deft-org-mode-title-prefix nil)
   (deft-use-filename-as-title t))
 
 ;; iedit
