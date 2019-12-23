@@ -453,7 +453,7 @@
 ;; iedit
 (use-package iedit
   :bind
-  (("C-:" . iedit-mode)))
+  (("C-;" . iedit-mode)))
 
 ;; expand-region
 (use-package expand-region
