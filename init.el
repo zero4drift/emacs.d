@@ -29,23 +29,6 @@
 			,load-file-name elapsed)))
 	  t)
 
-;; quelpa
-(unless (require 'quelpa nil t)
-  (with-temp-buffer
-    (url-insert-file-contents
-     "https://framagit.org/steckerhalter/quelpa/raw/master/bootstrap.el")
-    (eval-buffer)))
-;; using quelpa mainly for installing packages outside of MELPA
-(setq quelpa-checkout-melpa-p nil)
-
-;; quelpa-use-package
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url
-   "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-(require 'quelpa-use-package)
-
 ;; use-package
 (eval-when-compile
   (require 'use-package))
@@ -919,116 +902,12 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
-;; awesome-tab, many thanks to manateelazycat!
-(use-package awesome-tab
-  :quelpa
-  ((awesome-tab
-    :fetcher github
-    :repo "zero4drift/awesome-tab"))
-  :init
-  (custom-set-faces
-   `(awesome-tab-selected ((t
-			    (:inherit awesome-tab-default
-				      :foreground
-  				      ,(face-foreground 'success)
-  				      :overline
-  				      ,(face-foreground 'dired-symlink)
-  				      :weight ultra-bold
-  				      :width semi-expanded))))
-   `(awesome-tab-unselected ((t
-			      (:inherit awesome-tab-default
-					:foreground
-  					,(face-foreground 'default)
-  					:weight bold))))
-   '(awesome-tab-default ((t (:height 1.1)))))
-  ;; my tab buffer groups function
-  (defun zero4drift-tab-buffer-groups ()
-    (list
-     (cond
-      ((or (string-equal "*" (substring (buffer-name) 0 1))
-	   (memq major-mode '(magit-process-mode
-			      magit-status-mode
-			      magit-diff-mode
-			      magit-log-mode
-			      magit-file-mode
-			      magit-blob-mode
-			      magit-blame-mode
-			      )))
-       "Emacs")
-      ((derived-mode-p 'ledger-mode)
-       "Ledger")
-      ((derived-mode-p 'eshell-mode)
-       "EShell")
-      ((derived-mode-p 'emacs-lisp-mode)
-       "Elisp")
-      ((derived-mode-p 'dired-mode)
-       "Dired")
-      ((memq major-mode '(org-mode org-agenda-mode diary-mode))
-       "OrgMode")
-      (t
-       (if (awesome-tab-in-project-p)
-	   (awesome-tab-get-group-name (current-buffer))
-	 "Common"))
-      )))
-  :custom
-  ;; (awesome-tab-background-color (face-background 'default))
-  (awesome-tab-buffer-groups-function 'zero4drift-tab-buffer-groups)
-  :config
-  (require 'cl)
-  (require 'projectile)
-  (awesome-tab-mode t))
-
 ;; dired+ make dired human-friendly
 ;; built-in dired
 (setq dired-listing-switches "-alh")
 (setq dired-dwim-target t)
 (setq dired-recursive-copies 'always)
 (setq dired-recursive-deletes 'top)
-;; dired+
-(use-package dired+
-  :quelpa
-  ((dired+
-    :fetcher github
-    :repo "emacsmirror/dired-plus")))
-;; open file in external apps, thanks to Xah Lee!
-(defun xah-open-in-external-app ()
-  "Open the current file or dired marked files in external app.
-  The app is chosen from your OS's preference.
-  URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-  Version 2016-10-15"
-  (interactive)
-  (let* (
-         ($file-list
-          (if (string-equal major-mode "dired-mode")
-              (dired-get-marked-files)
-	    (list (buffer-file-name))))
-         ($do-it-p (if (<= (length $file-list) 5)
-                       t
-                     (y-or-n-p "Open more than 5 files? "))))
-    (when $do-it-p
-      (cond
-       ((string-equal system-type "windows-nt")
-        (mapc
-         (lambda ($fpath)
-           (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" $fpath t t))) $file-list))
-       ((string-equal system-type "darwin")
-        (mapc
-         (lambda ($fpath)
-           (shell-command
-            (concat "open " (shell-quote-argument $fpath))))  $file-list))
-       ((string-equal system-type "gnu/linux")
-        (mapc
-         (lambda ($fpath) (let ((process-connection-type nil))
-                       (start-process "" nil "xdg-open" $fpath))) $file-list))))))
-;; two customized shortcuts placed after dired+
-(put 'dired-find-alternate-file 'disabled nil)
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "RET")
-    'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "^")
-    (lambda () (interactive) (find-alternate-file "..")))
-  (define-key dired-mode-map (kbd "*o")
-    'xah-open-in-external-app))
 
 ;; blog
 (use-package ox-hugo
