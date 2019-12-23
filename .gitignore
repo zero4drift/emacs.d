@@ -10,6 +10,6 @@ recentf
 /tutorial
 /bookmarks
 /pyim
-/.cache
+/.*
 /url
 
