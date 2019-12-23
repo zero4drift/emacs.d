@@ -835,7 +835,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   (display-line-numbers-width 2)
   (display-line-numbers-grow-only t)
   :init
-  (set-face-font 'line-number "Monaco")
   (set-face-background 'line-number-current-line
 		       (face-foreground 'success))
   :hook
