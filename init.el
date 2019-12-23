@@ -783,63 +783,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :config
   (which-key-setup-side-window-right-bottom))
 
-;; pyim Chinese input method
-(use-package pyim
-  :after (ivy)
-  :demand t
-  :custom
-  (pyim-dicts
-   '((:name "CS" :file "~/.emacs.d/pyim/cs.pyim")
-     (:name "BigDict" :file "~/.emacs.d/pyim/pyim-bigdict.pyim.gz")))
-  :config
-  ;; 让swiper 支持 pyim, 搜索词加前缀 .
-  (defun eh-ivy-cregexp(str)
-    (if (string-match-p "^\\." str)
-	(pyim-cregexp-build(substring str 1))
-      (ivy--regex-plus str)))
-
-  (setq ivy-re-builders-alist
-	'((t . eh-ivy-cregexp)))
-
-  (setq default-input-method "pyim")
-
-  ;; 我使用全拼
-  (setq pyim-default-scheme 'quanpin)
-
-  ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
-  ;; 我自己使用的中英文动态切换规则是：
-  ;; 1. 光标只有在注释里面时，才可以输入中文。
-  ;; 2. 光标前是汉字字符时，才能输入中文。
-  ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
-  (setq-default pyim-english-input-switch-functions
-		'(pyim-probe-dynamic-english
-		  pyim-probe-isearch-mode
-		  pyim-probe-program-mode
-		  pyim-probe-org-structure-template))
-
-  (setq-default pyim-punctuation-half-width-functions
-		'(pyim-probe-punctuation-line-beginning
-		  pyim-probe-punctuation-after-punctuation))
-
-  ;; 开启拼音搜索功能
-  (pyim-isearch-mode 1)
-
-  ;; 使用 pupup-el 来绘制选词框, 如果用 emacs26, 建议设置
-  ;; 为 'posframe, 速度很快并且菜单不会变形，不过需要用户
-  ;; 手动安装 posframe 包。
-  (use-package posframe)
-  (setq pyim-page-tooltip 'posframe)
-
-  ;; 选词框显示5个候选词
-  (setq pyim-page-length 5)
-
-  ;; 让 Emacs 启动时自动加载 pyim 词库
-  (add-hook 'emacs-startup-hook
-	    #'(lambda () (pyim-restart-1 t)))
-  :bind
-  (;与 pyim-probe-dynamic-english 配合
-   ("M-j" . pyim-convert-string-at-point)))
-
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
   :defer t)
@@ -885,15 +828,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :hook ((prog-mode fundamental-mode text-mode)
 	 . evil-local-mode))
 ;; end evil confs
-
-;; youdao-dictionary
-(use-package youdao-dictionary
-  :custom
-  (url-automatic-caching t)
-  (youdao-dictionary-search-histroy-file "~/.emacs.d/.youdao")
-  :bind
-  (("C-c y" . 'youdao-dictionary-search-at-point+)
-   ("C-c p" . 'youdao-dictionary-play-voice-at-point)))
 
 ;; built-in display-line-mode
 (use-package display-line-numbers
