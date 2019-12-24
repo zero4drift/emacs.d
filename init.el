@@ -467,8 +467,8 @@
   (company-show-numbers t)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
-  :config
-  (global-company-mode)
+  :hook
+  (after-init . global-company-mode)
   :bind
   (:map company-active-map
 	("M-n" . nil)
