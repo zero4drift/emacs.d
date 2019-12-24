@@ -692,9 +692,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 		      :underline
 		      (face-background 'highlight))
   :custom
-  (x-underline-at-descent-line t)
   (doom-modeline-buffer-file-name-style 'truncate-upto-root)
-  :hook (after-init . doom-modeline-init))
+  (doom-modeline-continuous-word-count-modes '(markdown-mode
+					       org-mode))
+  :hook (after-init . doom-modeline-mode))
 
 ;; ace-window
 (use-package ace-window
