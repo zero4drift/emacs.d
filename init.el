@@ -169,15 +169,6 @@
 ;; encoding system
 (setq-default language-environment 'utf-8)
 
-;; show parens enhanced
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(define-advice show-paren-function (:around (fn) fix-show-paren-function)
-  "Hightlight enclosing parens"
-  (cond ((looking-at-p "\\s(") (funcall fn))
-	(t (save-excursion
-	     (ignore-errors (backward-up-list))
-	     (funcall fn)))))
-
 ;; on-the-fly indentation
 (electric-indent-mode t)
 
@@ -610,10 +601,9 @@
 ;; smartparens
 (use-package smartparens-config
   :ensure smartparens
-  :config
-  (progn (show-smartparens-global-mode t))
   :hook
-  (prog-mode . turn-on-smartparens-strict-mode))
+  (prog-mode . turn-on-smartparens-strict-mode)
+  (after-init . show-smartparens-global-mode))
 
 ;; hydra
 (use-package hydra
