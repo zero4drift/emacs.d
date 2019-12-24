@@ -590,11 +590,6 @@
   :hook
   (prog-mode . flycheck-mode))
 
-;; hungry-delete
-(use-package hungry-delete
-  :config
-  (global-hungry-delete-mode))
-
 ;; ledger-mode
 (use-package ledger-mode
   :init
