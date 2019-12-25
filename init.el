@@ -702,6 +702,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :defer t
   :custom
   (aw-background nil)
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (aw-background nil)
+  (aw-dispatch-always t)
+  (aw-minibuffer-flag t)
   :bind (("C-x o" . ace-window)))
 
 ;; treemacs
