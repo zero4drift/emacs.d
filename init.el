@@ -764,8 +764,13 @@ _k_: kill        _s_: split                   _{_: wrap with { }
 
 ;; which-key
 (use-package which-key
-  :init
-  (which-key-mode)
+  :hook
+  (after-init . which-key-mode)
+  :custom
+  (which-key-show-early-on-C-h t)
+  (which-key-idle-delay 10000)
+  (which-key-idle-secondary-delay 0.05)
+  (which-key-sort-order 'which-key-local-then-key-order)
   :config
   (which-key-setup-side-window-right-bottom))
 
