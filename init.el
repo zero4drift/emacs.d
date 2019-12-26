@@ -844,7 +844,10 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   (org-hugo-section "post"))
 (use-package easy-hugo
   :custom
-  (easy-hugo-basedir "~/github/blog/"))
+  (easy-hugo-basedir "~/github/blog/")
+  (easy-hugo-url "https://zero4drift.github.io")
+  (easy-hugo-default-ext ".org")
+  (easy-hugo-default-picture-directory "~/Pictures"))
 ;; end blog
 
 ;; end use-packages
