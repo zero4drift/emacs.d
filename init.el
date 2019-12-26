@@ -831,7 +831,6 @@ _k_: kill        _s_: split                   _{_: wrap with { }
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
-;; dired+ make dired human-friendly
 ;; built-in dired
 (setq dired-listing-switches "-alh")
 (setq dired-dwim-target t)
