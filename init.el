@@ -319,8 +319,13 @@
   ;; (ccls/vars 3) => field or local variable. 3 = 1 | 2
   ;; (ccls/vars 4) => parameter
   :custom
-  (ccls-executable "~/github/ccls/Release/ccls")
+  (ccls-executable "/opt/local/bin/ccls-clang-8.0")
   (ccls-args '("--log-file=/tmp/ccls.log"))
+  (ccls-initialization-options
+   '(:clang (:extraArgs
+	     ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
+	      "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+	      "-isystem/opt/local/include"])))
   :hook ((c-mode c++-mode) .
 	 (lambda () (require 'ccls) (lsp))))
 ;; ends ccls
