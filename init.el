@@ -420,13 +420,10 @@
   ("g" nil))
 
 ;; counsel
-(use-package counsel)
-;; swiper
-(use-package swiper
-  :after (counsel)
-  :config
-  (ivy-mode 1)
-  (counsel-mode 1)
+(use-package counsel
+  :hook
+  (after-init . ivy-mode)
+  (after-init . counsel-mode)
   :bind
   (("\C-s" . swiper)
    ("C-c C-r" . ivy-resume)
