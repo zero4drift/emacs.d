@@ -355,7 +355,7 @@
 (use-package flycheck
   :custom
   (flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck
-  c/c++-gcc))
+					    c/c++-gcc))
   :hook
   (prog-mode . flycheck-mode))
 
