@@ -247,11 +247,14 @@
   :after (evil)
   :hook
   (lsp-mode . lsp-ui-mode)
-  :config
-  (define-key evil-normal-state-map (kbd "M-.") 'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] 'lsp-ui-peek-find-references)
-  (define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
-  (define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward))
+  :bind
+  (:map evil-normal-state-map
+	("M-." . lsp-ui-peek-find-definitions)
+	("C-p" . lsp-ui-peek-jump-forward)
+	("C-t" . lsp-ui-peek-jump-backward))
+  (:map lsp-ui-mode-map
+	([remap xref-pop-marker-stack]
+	 . lsp-ui-find-references)))
 
 (use-package company-lsp
   :commands company-lsp
