@@ -277,7 +277,7 @@
   (push 'company-lsp company-backends))
 
 (use-package ccls
-  :init
+  :config
   (defun ccls/callee () (interactive)
 	 (lsp-ui-peek-find-custom "$ccls/call" '(:callee t)))
   (defun ccls/caller () (interactive)
