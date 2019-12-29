@@ -138,6 +138,12 @@
 
 
 ;; files, folders, buffers and text
+;; built-in dired
+(setq dired-listing-switches "-alh")
+(setq dired-dwim-target t)
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'top)
+
 ;; use fundamental-mode to open large files
 (defun zero4drift-check-large-file ()
   (when (> (buffer-size) 500000)
@@ -614,11 +620,6 @@
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
-;; built-in dired
-(setq dired-listing-switches "-alh")
-(setq dired-dwim-target t)
-(setq dired-recursive-copies 'always)
-(setq dired-recursive-deletes 'top)
 
 ;; blog
 (use-package ox-hugo
