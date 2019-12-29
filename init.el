@@ -348,8 +348,8 @@
   :after (company yasnippet-snippets)
   :bind
   (("C-c /" . company-yasnippet))
-  :config
-  (yas-global-mode t))
+  :hook
+  (after-init . yas-global-mode))
 
 ;; flycheck
 (use-package flycheck
