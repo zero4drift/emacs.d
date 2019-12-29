@@ -356,10 +356,6 @@
   :bind
   (("C-x g" . magit-status)))
 
-;; popwin
-(use-package popwin
-  :config (popwin-mode 1))
-
 ;; smartparens
 (use-package smartparens-config
   :ensure smartparens
