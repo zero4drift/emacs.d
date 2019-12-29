@@ -557,28 +557,29 @@
 ;; begin evil conf
 ;; evil-leader
 (use-package evil-leader
+  :after evil-nerd-commenter
   :hook
-  (evil-local-mode . evil-leader-mode)
+  (evil-mode . evil-leader-mode)
   :config
   (evil-leader/set-key
-    "ff" 'find-file
-    "bb" 'switch-to-buffer
-    ":"  'counsel-M-x
-    ;; evil-nerd-commenter
-    "ci" 'evilnc-comment-or-uncomment-lines
-    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "cc" 'evilnc-copy-and-comment-lines
-    "cp" 'evilnc-comment-or-uncomment-paragraphs
-    "cr" 'comment-or-uncomment-region
-    "cv" 'evilnc-toggle-invert-comment-line-by-line
-    "."  'evilnc-copy-and-comment-operator
-    "\\" 'evilnc-comment-operator ; if you prefer backslash key
-    ))
+   "ff" 'find-file
+   "bb" 'switch-to-buffer
+   ":"  'counsel-M-x
+   ;; evil-nerd-commenter
+   "ci" 'evilnc-comment-or-uncomment-lines
+   "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+   "cc" 'evilnc-copy-and-comment-lines
+   "cp" 'evilnc-comment-or-uncomment-paragraphs
+   "cr" 'comment-or-uncomment-region
+   "cv" 'evilnc-toggle-invert-comment-line-by-line
+   "."  'evilnc-copy-and-comment-operator
+   "\\" 'evilnc-comment-operator ; if you prefer backslash key
+   ))
 
 ;; evil-surround
 (use-package evil-surround
   :hook
-  (evil-local-mode . turn-on-evil-surround-mode)
+  (evil-mode . turn-on-evil-surround-mode)
   (c++-mode .
 	    (lambda ()
 	      (push '(?< . ("<" . ">"))
