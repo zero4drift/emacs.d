@@ -6,6 +6,7 @@
 ;; You may delete these explanatory comments.
 
 
+;; general settings
 ;; elpa
 (package-initialize)
 (setq package-archives
@@ -30,6 +31,7 @@
 (eval-when-compile
   (require 'use-package))
 (setq use-package-always-ensure t)
+;; end general settings
 
 
 ;; ui
