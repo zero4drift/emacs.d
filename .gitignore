@@ -1,5 +1,4 @@
 ### EMACS ###
-custom.el
 *.el~
 abbrev-defs
 auto-save-list/
