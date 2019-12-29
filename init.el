@@ -371,57 +371,57 @@
 (use-package hydra
   :defer t)
 
-(defhydra hydra-smartparens (global-map "M-p s" :hint t)
+(defhydra hydra-smartparens (global-map "M-p s" :hint nil)
   "
-Sexps (quit with _q_, help with _h_)
-^Nav^            ^Barf/Slurp^                 ^Depth^
-^---^------------^----------^-----------------^-----^-----------------
-_f_: forward     _→_:          slurp forward   _R_: splice
-_b_: backward    _←_:          barf forward    _r_: raise
-_u_: backward ↑  _C-<right>_:  slurp backward  _↑_: raise backward
-_d_: forward ↓   _C-<left>_:   barf backward   _↓_: raise forward
-_p_: backward ↓
-_n_: forward ↑
-^Kill^           ^Misc^                       ^Wrap^
-^----^-----------^----^-----------------------^----^------------------
-_w_: copy        _j_: join                    _(_: wrap with ( )
-_k_: kill        _s_: split                   _{_: wrap with { }
-^^               _t_: transpose               _'_: wrap with ' '
-^^               _c_: convolute               _\"_: wrap with \" \"
-^^               _i_: indent defun"
-  ("q" nil)
-  ("h" hydra-smartparens/body)
-  ;; Wrapping
-  ("(" (lambda (_) (interactive "P") (sp-wrap-with-pair "(")))
-  ("{" (lambda (_) (interactive "P") (sp-wrap-with-pair "{")))
-  ("'" (lambda (_) (interactive "P") (sp-wrap-with-pair "'")))
-  ("\"" (lambda (_) (interactive "P") (sp-wrap-with-pair "\"")))
-  ;; Navigation
-  ("f" sp-forward-sexp )
+ Moving^^^^                       Slurp & Barf^^   Wrapping^^            Sexp juggling^^^^               Destructive
+------------------------------------------------------------------------------------------------------------------------
+ [_a_] beginning  [_n_] down      [_h_] bw slurp   [_R_]   rewrap        [_S_] split   [_t_] transpose   [_c_] change inner  [_w_] copy
+ [_e_] end        [_N_] bw down   [_H_] bw barf    [_u_]   unwrap        [_s_] splice  [_A_] absorb      [_C_] change outer
+ [_f_] forward    [_p_] up        [_l_] slurp      [_U_]   bw unwrap     [_r_] raise   [_E_] emit        [_k_] kill          [_g_] quit
+ [_b_] backward   [_P_] bw up     [_L_] barf       [_(__{__[_] wrap (){}[]   [_j_] join    [_o_] convolute   [_K_] bw kill       [_q_] quit"
+  ;; Moving
+  ("a" sp-beginning-of-sexp)
+  ("e" sp-end-of-sexp)
+  ("f" sp-forward-sexp)
   ("b" sp-backward-sexp)
-  ("u" sp-backward-up-sexp)
-  ("d" sp-down-sexp)
-  ("p" sp-backward-down-sexp)
-  ("n" sp-up-sexp)
-  ;; Kill/copy
-  ("w" sp-copy-sexp)
-  ("k" sp-kill-sexp)
-  ;; Misc
-  ("t" sp-transpose-sexp)
+  ("n" sp-down-sexp)
+  ("N" sp-backward-down-sexp)
+  ("p" sp-up-sexp)
+  ("P" sp-backward-up-sexp)
+  
+  ;; Slurping & barfing
+  ("h" sp-backward-slurp-sexp)
+  ("H" sp-backward-barf-sexp)
+  ("l" sp-forward-slurp-sexp)
+  ("L" sp-forward-barf-sexp)
+  
+  ;; Wrapping
+  ("R" sp-rewrap-sexp)
+  ("u" sp-unwrap-sexp)
+  ("U" sp-backward-unwrap-sexp)
+  ("(" sp-wrap-round)
+  ("{" sp-wrap-curly)
+  ("[" sp-wrap-square)
+  
+  ;; Sexp juggling
+  ("S" sp-split-sexp)
+  ("s" sp-splice-sexp)
+  ("r" sp-raise-sexp)
   ("j" sp-join-sexp)
-  ("s" sp-split-sexp)
-  ("c" sp-convolute-sexp)
-  ("i" sp-indent-defun)
-  ;; Depth changing
-  ("R" sp-splice-sexp)
-  ("r" sp-splice-sexp-killing-around)
-  ("<up>" sp-splice-sexp-killing-backward)
-  ("<down>" sp-splice-sexp-killing-forward)
-  ;; Barfing/slurping
-  ("<right>" sp-forward-slurp-sexp)
-  ("<left>" sp-forward-barf-sexp)
-  ("C-<left>" sp-backward-barf-sexp)
-  ("C-<right>" sp-backward-slurp-sexp))
+  ("t" sp-transpose-sexp)
+  ("A" sp-absorb-sexp)
+  ("E" sp-emit-sexp)
+  ("o" sp-convolute-sexp)
+  
+  ;; Destructive editing
+  ("c" sp-change-inner :exit t)
+  ("C" sp-change-enclosing :exit t)
+  ("k" sp-kill-sexp)
+  ("K" sp-backward-kill-sexp)
+  ("w" sp-copy-sexp)
+
+  ("q" nil)
+  ("g" nil))
 
 ;; counsel
 (use-package counsel)
