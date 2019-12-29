@@ -362,7 +362,7 @@
   :init
   (defun open-ledger()
     (interactive)
-    (find-file "~/.accounting/2019.ledger"))
+    (find-file "~/.accounting/now.ledger"))
   :bind (([f3] . open-ledger)))
 
 ;; magit
