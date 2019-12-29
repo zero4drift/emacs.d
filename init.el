@@ -526,8 +526,17 @@
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
 
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
+
 (use-package treemacs-projectile
-  :after (treemacs projectile))
+  :after treemacs projectile
+  :ensure t)
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
 
 ;; which-key
 (use-package which-key
@@ -581,10 +590,8 @@
 
 ;; evil-mode
 (use-package evil
-  :bind
-  (([f5] . evil-local-mode))
-  :hook ((prog-mode fundamental-mode text-mode)
-	 . evil-local-mode))
+  :hook
+  (after-init . evil-mode))
 ;; end evil confs
 
 ;; built-in display-line-mode
