@@ -620,20 +620,14 @@
   :hook
   ((prog-mode text-mode) . #'display-line-numbers-mode))
 
-
 ;; blog
-(use-package ox-hugo
-  :after ox
-  :custom
-  (org-hugo-section "post"))
 (use-package easy-hugo
   :custom
-  (easy-hugo-basedir "~/github/blog/")
+  (easy-hugo-basedir "~/Documents/github/blog")
   (easy-hugo-url "https://zero4drift.github.io")
   (easy-hugo-default-ext ".org")
   (easy-hugo-default-picture-directory "~/Pictures"))
 ;; end blog
-
 ;; end use-packages
 
 
