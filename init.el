@@ -460,11 +460,14 @@
 ;; doom-modeline
 ;; manual run all-the-icons-install-fonts
 (use-package doom-modeline
+  :after solarized-theme
   :defer t
   :config
   (set-face-attribute 'mode-line nil
 		      :underline
 		      (face-background 'highlight))
+  (set-face-attribute 'mode-line-inactive nil
+		      :underline nil)
   :custom
   (doom-modeline-buffer-file-name-style 'truncate-upto-root)
   (doom-modeline-continuous-word-count-modes '(markdown-mode
