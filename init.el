@@ -144,7 +144,10 @@
 (setq dired-listing-switches "-alh")
 (setq dired-dwim-target t)
 (setq dired-recursive-copies 'always)
-(setq dired-recursive-deletes 'top)
+(setq dired-recursive-deletes 'always)
+(put 'dired-find-alternate-file 'disabled nil)
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
 
 ;; use fundamental-mode to open large files
 (defun zero4drift-check-large-file ()
