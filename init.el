@@ -433,6 +433,16 @@
   ("q" nil)
   ("g" nil))
 
+;; enhanced and human-friendly help functions and interfaces
+(use-package helpful
+  :bind
+  (("C-h k" . helpful-key)
+   ("C-c C-d" . helpful-at-point)
+   ("C-h F" . helpful-function)
+   ("C-h C" . helpful-command)
+   :map helpful-mode-map
+   ([remap evil-record-macro] . quit-window)))
+
 ;; counsel
 (use-package counsel
   :hook
@@ -445,7 +455,9 @@
    ("C-r" . counsel-minibuffer-history))
   :custom
   (ivy-use-virtual-buffers t)
-  (enable-recursive-minibuffers t))
+  (enable-recursive-minibuffers t)
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable))
 
 ;; solarized-theme
 (use-package solarized-theme
