@@ -112,11 +112,6 @@
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 (global-set-key (kbd "<f4>") 'open-init)
 
-;; shortcut to find function, variable
-(global-set-key (kbd "C-h C-f") 'find-function)
-(global-set-key (kbd "C-h C-v") 'find-variable)
-(global-set-key (kbd "C-h C-k") 'find-function-on-key)
-
 ;; functions defined for indent
 (defun indent-buffer ()
   "Indent the current visited buffer."
