@@ -579,7 +579,7 @@
 ;; begin evil conf
 ;; evil-leader
 (use-package evil-leader
-  :after evil-nerd-commenter
+  :after (evil-nerd-commenter counsel)
   :hook
   (evil-mode . evil-leader-mode)
   :config
