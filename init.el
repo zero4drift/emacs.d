@@ -474,7 +474,9 @@
 		      :underline
 		      (face-background 'highlight))
   (set-face-attribute 'mode-line-inactive nil
-		      :underline nil)
+		      :underline nil
+		      :background
+		      (face-background 'highlight))
   :custom
   (doom-modeline-buffer-file-name-style 'truncate-upto-root)
   (doom-modeline-continuous-word-count-modes '(markdown-mode
