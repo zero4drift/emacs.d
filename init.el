@@ -583,14 +583,14 @@
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :defer t)
+  :ensure t)
 
 ;; begin evil conf
 ;; evil-leader
 (use-package evil-leader
-  :after (evil-nerd-commenter counsel)
+  :after evil-nerd-commenter
   :hook
-  (evil-mode . evil-leader-mode)
+  (after-init . global-evil-leader-mode)
   :config
   (evil-leader/set-key
    "ff" 'find-file
@@ -623,7 +623,7 @@
 ;; evil-mode
 (use-package evil
   :hook
-  (after-init . evil-mode))
+  (global-evil-leader-mode . evil-mode))
 ;; end evil confs
 
 ;; built-in display-line-mode
