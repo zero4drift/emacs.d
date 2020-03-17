@@ -169,6 +169,8 @@
 
 ;; encoding system
 (setq-default language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
 
 ;; on-the-fly indentation
 (electric-indent-mode t)
@@ -205,6 +207,10 @@
   (deft-use-filter-string-for-filename nil)
   (deft-org-mode-title-prefix nil)
   (deft-use-filename-as-title t))
+
+;; anki
+(use-package anki-connect)
+(use-package anki-editor)
 
 ;; iedit
 (use-package iedit
@@ -647,6 +653,3 @@
 ;; end blog
 ;; end use-packages
 
-
-(provide 'init)
-;;; init.el ends here
