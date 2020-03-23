@@ -381,10 +381,10 @@
   (after-init . show-smartparens-global-mode))
 
 ;; hydra
-((use-package hydra
+(use-package hydra
    :defer t)
 
- defhydra hydra-smartparens (global-map "M-p s" :hint nil)
+(defhydra hydra-smartparens (global-map "M-p s" :hint nil)
  "
  Moving^^^^                       Slurp & Barf^^   Wrapping^^            Sexp juggling^^^^               Destructive
 ------------------------------------------------------------------------------------------------------------------------
